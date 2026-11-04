@@ -1,5 +1,5 @@
 window.SANKI_CONFIG={
- features:{journey:false,gallery:true,videoBackground:true},
+ features:{journey:true,gallery:true,videoBackground:true},
  sankiBeats:{
   online:true,
   officialSiteUrl:"https://YOUR-SANKI-BEATS-DOMAIN.com",
