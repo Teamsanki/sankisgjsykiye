@@ -1,62 +1,98 @@
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
-/* =====================================
-   INTRO VIDEO - EXACT 10 SECONDS
-===================================== */
+  /* =====================================
+     INTRO VIDEO ENGINE
+     MAXIMUM 10 SECONDS
+  ===================================== */
 
-const introScreen = document.getElementById("introScreen");
-const introVideo = document.getElementById("introVideo");
+  const introScreen = document.getElementById("introScreen");
+  const introVideo = document.getElementById("introVideo");
 
-const introVideoPath = "assets/videos/intro.mp4";
+  const introVideoPath = "assets/videos/intro.mp4";
 
-let introFinished = false;
-let introTimer;
+  let introFinished = false;
+  let introTimer = null;
 
-function finishIntro() {
+  function finishIntro() {
 
-  if (introFinished) return;
+    if (introFinished) return;
 
-  introFinished = true;
+    introFinished = true;
 
-  clearTimeout(introTimer);
+    clearTimeout(introTimer);
 
-  introScreen.classList.add("finished");
+    // Fade out intro
+    if (introScreen) {
+      introScreen.classList.add("finished");
+    }
 
-  document.body.classList.remove("intro-playing");
+    // Fade in website
+    document.body.classList.remove("intro-playing");
+    document.body.classList.add("site-visible");
 
-  document.body.classList.add("site-visible");
+    // Remove intro after transition
+    setTimeout(() => {
+      if (introScreen) {
+        introScreen.remove();
+      }
+    }, 1600);
+  }
 
-  setTimeout(() => {
-    introScreen.remove();
-  }, 1600);
-}
+  if (introScreen && introVideo) {
 
-if (introScreen && introVideo) {
+    introVideo.muted = true;
+    introVideo.defaultMuted = true;
+    introVideo.autoplay = true;
+    introVideo.playsInline = true;
 
-  introVideo.muted = true;
-  introVideo.playsInline = true;
-  introVideo.src = introVideoPath;
+    introVideo.setAttribute("muted", "");
+    introVideo.setAttribute("playsinline", "");
+    introVideo.setAttribute("webkit-playsinline", "");
 
-  // 10-second maximum intro
-  introTimer = setTimeout(finishIntro, 10000);
+    // Maximum 10-second timer
+    introTimer = setTimeout(() => {
+      finishIntro();
+    }, 10000);
 
-  introVideo.addEventListener("ended", finishIntro, {
-    once: true
-  });
+    // Video ends naturally
+    introVideo.addEventListener("ended", finishIntro, {
+      once: true
+    });
 
-  introVideo.addEventListener("error", () => {
-    console.error("Intro video failed to load:", introVideoPath);
+    // Video loading or playback error
+    introVideo.addEventListener("error", function () {
+      console.error("INTRO VIDEO ERROR:", introVideo.error);
+      finishIntro();
+    }, { once: true });
+
+    // Load intro
+    introVideo.src = introVideoPath;
+    introVideo.load();
+
+    // Play intro
+    const playPromise = introVideo.play();
+
+    if (playPromise !== undefined) {
+
+      playPromise.catch(function (error) {
+
+        console.error("INTRO AUTOPLAY ERROR:", error);
+
+        // Never leave the user on a blank screen
+        finishIntro();
+
+      });
+
+    }
+
+  } else {
+
+    // If intro HTML is missing, show website
     finishIntro();
-  }, { once: true });
 
-  introVideo.load();
+  }
 
-  introVideo.play().catch(error => {
-    console.error("Intro autoplay failed:", error);
-    finishIntro();
-  });
-}
 
   /* =====================================
      BACKGROUND VIDEO ENGINE
@@ -65,7 +101,7 @@ if (introScreen && introVideo) {
   const backgroundVideos = [
     "assets/videos/IMG_7999_20261017132345.mp4"
 
-    // Add more videos here:
+    // Add more videos:
     // "assets/videos/video2.mp4",
     // "assets/videos/video3.mp4"
   ];
@@ -80,71 +116,86 @@ if (introScreen && introVideo) {
 
   function startBackground() {
 
-    if (!backgroundVideos.length || !activeVideo) return;
+    if (!activeVideo || backgroundVideos.length === 0) return;
 
-    const firstVideo = backgroundVideos[0];
-
-    activeVideo.src = firstVideo;
+    activeVideo.src = backgroundVideos[0];
     activeVideo.muted = true;
     activeVideo.playsInline = true;
 
-    // One video: simply loop it
+    // Single video: continuous loop
     if (backgroundVideos.length === 1) {
+
       activeVideo.loop = true;
+
     }
 
-    activeVideo.addEventListener("canplay", () => {
+    activeVideo.addEventListener("canplay", function () {
+
       activeVideo.classList.add("active");
+
       activeVideo.play().catch(error => {
-        console.warn("Background autoplay blocked:", error);
+        console.warn("Background video autoplay blocked:", error);
       });
+
+    }, { once: true });
+
+    activeVideo.addEventListener("error", function () {
+      console.error("Background video could not load.");
     }, { once: true });
 
     activeVideo.load();
   }
 
+
+  /* =====================================
+     BACKGROUND VIDEO CROSSFADE
+     FOR MULTIPLE VIDEOS
+  ===================================== */
+
   function switchBackground() {
 
     if (
       switching ||
-      backgroundVideos.length < 2
+      backgroundVideos.length < 2 ||
+      !nextVideo ||
+      !activeVideo
     ) return;
 
     switching = true;
 
     currentIndex = (currentIndex + 1) % backgroundVideos.length;
 
-    const incomingVideo = nextVideo;
-    const outgoingVideo = activeVideo;
+    const incoming = nextVideo;
+    const outgoing = activeVideo;
 
-    incomingVideo.src = backgroundVideos[currentIndex];
-    incomingVideo.muted = true;
-    incomingVideo.playsInline = true;
-    incomingVideo.loop = false;
+    incoming.src = backgroundVideos[currentIndex];
+    incoming.muted = true;
+    incoming.playsInline = true;
+    incoming.loop = false;
 
-    incomingVideo.load();
+    incoming.load();
 
-    incomingVideo.addEventListener("canplay", function handleReady() {
+    incoming.addEventListener("canplay", function ready() {
 
-      incomingVideo.removeEventListener("canplay", handleReady);
+      incoming.removeEventListener("canplay", ready);
 
-      incomingVideo.currentTime = 0;
+      incoming.currentTime = 0;
 
-      incomingVideo.play().catch(error => {
+      incoming.play().catch(error => {
         console.warn("Next background video failed:", error);
       });
 
-      incomingVideo.classList.add("active");
-      outgoingVideo.classList.remove("active");
+      incoming.classList.add("active");
+      outgoing.classList.remove("active");
 
       setTimeout(() => {
 
-        outgoingVideo.pause();
-        outgoingVideo.removeAttribute("src");
-        outgoingVideo.load();
+        outgoing.pause();
+        outgoing.removeAttribute("src");
+        outgoing.load();
 
-        activeVideo = incomingVideo;
-        nextVideo = outgoingVideo;
+        activeVideo = incoming;
+        nextVideo = outgoing;
 
         switching = false;
 
@@ -153,8 +204,12 @@ if (introScreen && introVideo) {
     }, { once: true });
   }
 
-  bgVideo1.addEventListener("ended", switchBackground);
-  bgVideo2.addEventListener("ended", switchBackground);
+  if (bgVideo1 && bgVideo2) {
+
+    bgVideo1.addEventListener("ended", switchBackground);
+    bgVideo2.addEventListener("ended", switchBackground);
+
+  }
 
   startBackground();
 
@@ -176,6 +231,7 @@ if (introScreen && introVideo) {
           entry.target.classList.add("visible");
 
           observer.unobserve(entry.target);
+
         }
 
       });
@@ -205,6 +261,8 @@ if (introScreen && introVideo) {
 
   function updateProgress() {
 
+    if (!progressBar) return;
+
     const scrollTop = window.scrollY;
 
     const scrollHeight =
@@ -215,6 +273,7 @@ if (introScreen && introVideo) {
       : 0;
 
     progressBar.style.width = progress + "%";
+
   }
 
   window.addEventListener("scroll", updateProgress, {
