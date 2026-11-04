@@ -1,967 +1,1065 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TERA SANKI — Official Artist Website</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" href="assets/icons/favicon.svg">
-<link rel="stylesheet" href="css/style.css">
+  <title>TERA SANKI — Official Website</title>
+  <meta name="description" content="Official website of Tera Sanki — Punjabi Rapper, Singer and Lyricist from Gurdaspur, Punjab.">
 
-<script src="config.js" defer></script>
-<script src="js/site.js" defer></script>
+  <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
 
-<style>
-
-/* ==============================
-   CINEMATIC HOMEPAGE
-============================== */
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: #050505;
-  color: #fff;
-  overflow-x: hidden;
-}
-
-/* BACKGROUND VIDEO */
-
-.cinematic-bg {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: #050505;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.cinematic-bg video {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  inset: 0;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
-.cinematic-bg video.active {
-  opacity: 1;
-}
-
-.cinematic-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.55), transparent 35%, #050505 100%),
-    rgba(0,0,0,.35);
-}
-
-/* CONTENT */
-
-.header,
-main,
-.footer {
-  position: relative;
-  z-index: 2;
-}
-
-/* HERO */
-
-.ts-hero {
-  min-height: 100svh;
-  display: flex;
-  align-items: center;
-  padding: 100px 8%;
-  position: relative;
-}
-
-.ts-hero-content {
-  max-width: 1000px;
-}
-
-.ts-label {
-  color: #aaa;
-  letter-spacing: 5px;
-  font-size: 11px;
-  text-transform: uppercase;
-  margin-bottom: 25px;
-}
-
-.ts-title {
-  font-size: clamp(65px, 13vw, 165px);
-  line-height: .85;
-  font-weight: 900;
-  letter-spacing: -7px;
-  margin: 0 0 35px;
-}
-
-.ts-title span {
-  display: block;
-  color: transparent;
-  -webkit-text-stroke: 1.5px white;
-}
-
-.ts-description {
-  max-width: 450px;
-  color: #ccc;
-  font-size: 15px;
-  line-height: 1.8;
-  margin-bottom: 30px;
-}
-
-.ts-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.ts-button {
-  display: inline-block;
-  padding: 15px 25px;
-  border: 1px solid rgba(255,255,255,.4);
-  color: white;
-  text-decoration: none;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: .3s;
-}
-
-.ts-button.primary {
-  background: white;
-  color: black;
-}
-
-.ts-button:hover {
-  background: white;
-  color: black;
-}
-
-.ts-scroll {
-  position: absolute;
-  bottom: 35px;
-  left: 8%;
-  color: #aaa;
-  font-size: 10px;
-  letter-spacing: 4px;
-}
-
-/* COMMON SECTIONS */
-
-.ts-section {
-  position: relative;
-  padding: 130px 8%;
-  background: rgba(5,5,5,.91);
-}
-
-.ts-eyebrow {
-  color: #999;
-  font-size: 10px;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-
-.ts-heading {
-  font-size: clamp(40px, 7vw, 85px);
-  line-height: .95;
-  letter-spacing: -3px;
-  margin: 0 0 35px;
-  text-transform: uppercase;
-}
-
-.ts-text {
-  color: #aaa;
-  max-width: 650px;
-  font-size: 15px;
-  line-height: 2;
-}
-
-/* INTRO */
-
-.ts-intro {
-  min-height: 65vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.ts-intro .ts-heading span {
-  color: #777;
-}
-
-/* JOURNEY */
-
-.ts-timeline {
-  max-width: 850px;
-  margin-top: 65px;
-  border-left: 1px solid #444;
-  padding-left: 35px;
-}
-
-.ts-event {
-  position: relative;
-  margin-bottom: 65px;
-}
-
-.ts-event::before {
-  content: "";
-  position: absolute;
-  left: -41px;
-  top: 7px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: white;
-}
-
-.ts-event small {
-  color: #777;
-  letter-spacing: 3px;
-  font-size: 10px;
-}
-
-.ts-event h3 {
-  font-size: 27px;
-  margin: 12px 0;
-  text-transform: uppercase;
-}
-
-.ts-event p {
-  color: #aaa;
-  line-height: 1.9;
-  max-width: 550px;
-  font-size: 14px;
-}
-
-/* MUSIC RELEASES */
-
-.ts-releases {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 55px;
-}
-
-.ts-release {
-  min-height: 210px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  background: linear-gradient(145deg,#222,#090909);
-  border: 1px solid #292929;
-  transition: .4s;
-}
-
-.ts-release:hover {
-  transform: translateY(-7px);
-  border-color: #777;
-}
-
-.ts-release small {
-  color: #999;
-  letter-spacing: 3px;
-  font-size: 10px;
-}
-
-.ts-release h3 {
-  font-size: 30px;
-  margin: 12px 0 5px;
-}
-
-.ts-release p {
-  color: #aaa;
-  font-size: 12px;
-}
-
-/* VISUAL SECTION */
-
-.ts-visual {
-  min-height: 65vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background:
-    linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.45)),
-    #111;
-}
-
-/* BEATS */
-
-.ts-beats {
-  background: #0b0b0b;
-  text-align: center;
-}
-
-.ts-beats .ts-text {
-  margin: 0 auto 30px;
-}
-
-/* FINAL */
-
-.ts-final {
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.ts-final .ts-heading {
-  font-size: clamp(55px, 12vw, 130px);
-}
-
-.ts-social {
-  margin-top: 30px;
-  display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.ts-social a {
-  color: #aaa;
-  text-decoration: none;
-  font-size: 11px;
-  letter-spacing: 2px;
-}
-
-.ts-social a:hover {
-  color: white;
-}
-
-/* SCROLL REVEAL */
-
-.ts-reveal {
-  opacity: 0;
-  transform: translateY(65px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.ts-reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* PROGRESS BAR */
-
-.ts-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  width: 0;
-  background: white;
-  z-index: 9999;
-}
-
-/* MOBILE */
-
-@media(max-width:700px) {
-
-  .ts-hero {
-    padding: 100px 7%;
-  }
-
-  .ts-title {
-    letter-spacing: -3px;
-  }
-
-  .ts-section {
-    padding: 90px 7%;
-  }
-
-  .ts-releases {
-    grid-template-columns: 1fr;
-  }
-
-  .ts-release {
-    min-height: 170px;
-  }
-
-  .ts-scroll {
-    left: 7%;
-  }
-
-}
-
-@media(prefers-reduced-motion:reduce) {
-  .ts-reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-</style>
-</head>
-
-<body>
-
-<!-- VIDEO BACKGROUND -->
-
-<div class="cinematic-bg">
-
-  <video id="bgVideo1" autoplay muted playsinline preload="auto"></video>
-
-  <video id="bgVideo2" muted playsinline preload="auto"></video>
-
-  <div class="cinematic-overlay"></div>
-
-</div>
-
-<div class="ts-progress" id="tsProgress"></div>
-
-<!-- NAVIGATION -->
-
-<header class="header">
-
-  <a class="brand" href="index.html">
-    <b>SANKI</b> MUSIC
-  </a>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="music.html">Music</a>
-    <a href="videos.html">Videos</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="about.html">About</a>
-    <a href="beats.html">Sanki Beats ↗</a>
-  </nav>
-
-</header>
-
-
-<main>
-
-  <!-- HERO -->
-
-  <section class="ts-hero">
-
-    <div class="ts-hero-content">
-
-      <div class="ts-label">
-        SANKI MUSIC PRESENTS
-      </div>
-
-      <h1 class="ts-title">
-        TERA
-        <span>SANKI.</span>
-      </h1>
-
-      <p class="ts-description">
-        Independent Punjabi Rapper, Singer & Lyricist.
-        From Gurdaspur, Punjab.
-        Creating my own sound, building my own identity.
-      </p>
-
-      <div class="ts-buttons">
-
-        <a href="music.html" class="ts-button primary">
-          Explore Music ↗
-        </a>
-
-        <a href="journey.html" class="ts-button">
-          My Journey ↗
-        </a>
-
-      </div>
-
-    </div>
-
-    <div class="ts-scroll">
-      SCROLL TO EXPLORE ↓
-    </div>
-
-  </section>
-
-
-  <!-- INTRO -->
-
-  <section class="ts-section ts-intro ts-reveal">
-
-    <div class="ts-eyebrow">
-      01 / THE ARTIST
-    </div>
-
-    <h2 class="ts-heading">
-      NOT JUST MUSIC.
-      <span>AN IDENTITY.</span>
-    </h2>
-
-    <p class="ts-text">
-      Tera Sanki is an independent Punjabi rapper, singer
-      and lyricist from Gurdaspur, Punjab.
-
-      <br><br>
-
-      Every track, every visual and every release
-      represents another chapter of an independent
-      music journey.
-
-      No shortcuts. No borrowed identity.
-      Just music, vision and consistency.
-    </p>
-
-  </section>
-
-
-  <!-- JOURNEY -->
-
-  <section class="ts-section">
-
-    <div class="ts-reveal">
-
-      <div class="ts-eyebrow">
-        02 / THE STORY
-      </div>
-
-      <h2 class="ts-heading">
-        THE JOURNEY
-      </h2>
-
-      <p class="ts-text">
-        Every artist has a beginning.
-        This is mine.
-      </p>
-
-    </div>
-
-    <div class="ts-timeline">
-
-      <div class="ts-event ts-reveal">
-        <small>THE BEGINNING</small>
-        <h3>Finding My Sound</h3>
-        <p>
-          Started building an independent identity
-          through Punjabi rap, lyrics, melodies
-          and creative experimentation.
-        </p>
-      </div>
-
-      <div class="ts-event ts-reveal">
-        <small>FIRST CHAPTERS</small>
-        <h3>NO MERCY</h3>
-        <p>
-          An important chapter of the independent
-          journey. From creating the song to
-          developing its visual presentation.
-        </p>
-      </div>
-
-      <div class="ts-event ts-reveal">
-        <small>THE MUSIC</small>
-        <h3>PYAAR KUDE</h3>
-        <p>
-          Released on 7 August.
-          Another side of the musical identity.
-        </p>
-      </div>
-
-      <div class="ts-event ts-reveal">
-        <small>THE NEXT MOVE</small>
-        <h3>UNPREDICTABLE</h3>
-        <p>
-          Released on 1 September.
-          Continuing to experiment and evolve.
-        </p>
-      </div>
-
-      <div class="ts-event ts-reveal">
-        <small>OCTOBER 2026</small>
-        <h3>BATI BORE</h3>
-        <p>
-          A new aggressive chapter in the
-          independent Punjabi music journey.
-        </p>
-      </div>
-
-      <div class="ts-event ts-reveal">
-        <small>THE FUTURE</small>
-        <h3>MORE TO COME.</h3>
-        <p>
-          New music, new visuals, new sounds.
-          The journey continues.
-        </p>
-      </div>
-
-    </div>
-
-    <a href="journey.html" class="ts-button">
-      Explore Full Journey ↗
-    </a>
-
-  </section>
-
-
-  <!-- MUSIC -->
-
-  <section class="ts-section">
-
-    <div class="ts-reveal">
-
-      <div class="ts-eyebrow">
-        03 / DISCOGRAPHY
-      </div>
-
-      <h2 class="ts-heading">
-        THE MUSIC.
-      </h2>
-
-      <p class="ts-text">
-        Different sounds. Different emotions.
-        One identity.
-      </p>
-
-    </div>
-
-    <div class="ts-releases">
-
-      <div class="ts-release ts-reveal">
-        <small>OFFICIAL MUSIC VIDEO</small>
-        <h3>NO MERCY</h3>
-        <p>One of the important chapters.</p>
-      </div>
-
-      <div class="ts-release ts-reveal">
-        <small>SINGLE</small>
-        <h3>PYAAR KUDE</h3>
-        <p>Released 07 August.</p>
-      </div>
-
-      <div class="ts-release ts-reveal">
-        <small>SINGLE</small>
-        <h3>UNPREDICTABLE</h3>
-        <p>Released 01 September.</p>
-      </div>
-
-      <div class="ts-release ts-reveal">
-        <small>SINGLE</small>
-        <h3>BATI BORE</h3>
-        <p>October 2026 chapter.</p>
-      </div>
-
-    </div>
-
-    <div style="margin-top:35px" class="ts-reveal">
-
-      <a href="music.html" class="ts-button">
-        Explore All Music ↗
-      </a>
-
-    </div>
-
-  </section>
-
-
-  <!-- VISUAL WORLD -->
-
-  <section class="ts-section ts-visual">
-
-    <div class="ts-reveal">
-
-      <div class="ts-eyebrow">
-        04 / BEYOND THE MUSIC
-      </div>
-
-      <h2 class="ts-heading">
-        THE VISUAL
-        WORLD.
-      </h2>
-
-      <p class="ts-text">
-        Music is more than sound.
-        Every frame, every visual and every
-        moment tells another part of the story.
-      </p>
-
-      <div style="margin-top:30px">
-
-        <a href="gallery.html" class="ts-button">
-          Explore Gallery ↗
-        </a>
-
-        <a href="videos.html" class="ts-button">
-          Watch Videos ↗
-        </a>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- SANKI BEATS -->
-
-  <section class="ts-section ts-beats">
-
-    <div class="ts-reveal">
-
-      <div class="ts-eyebrow">
-        05 / PRODUCTION
-      </div>
-
-      <h2 class="ts-heading">
-        SANKI BEATS.
-      </h2>
-
-      <p class="ts-text">
-        A creative space for sounds, beats
-        and musical experimentation.
-        Built under the Sanki Music identity.
-      </p>
-
-      <a href="beats.html" class="ts-button primary">
-        Discover Sanki Beats ↗
-      </a>
-
-    </div>
-
-  </section>
-
-
-  <!-- ABOUT -->
-
-  <section class="ts-section">
-
-    <div class="ts-reveal">
-
-      <div class="ts-eyebrow">
-        06 / ABOUT
-      </div>
-
-      <h2 class="ts-heading">
-        BUILT
-        INDEPENDENTLY.
-      </h2>
-
-      <p class="ts-text">
-        From writing lyrics to creating music,
-        developing visuals and building an artist
-        identity — the goal is to create something
-        that feels real.
-
-        <br><br>
-
-        Sanki Music is more than a name.
-        It's the vision behind the journey.
-      </p>
-
-      <a href="about.html" class="ts-button">
-        More About Me ↗
-      </a>
-
-    </div>
-
-  </section>
-
-
-  <!-- ENDING -->
-
-  <section class="ts-section ts-final">
-
-    <div class="ts-reveal">
-
-      <div class="ts-eyebrow">
-        THIS IS ONLY THE BEGINNING
-      </div>
-
-      <h2 class="ts-heading">
-        TERA
-        <span style="color:transparent;-webkit-text-stroke:1px white">
-          SANKI.
-        </span>
-      </h2>
-
-      <p class="ts-text">
-        Gurdaspur, Punjab, India.
-        Independent by choice.
-      </p>
-
-      <div class="ts-social">
-
-        <a href="https://www.youtube.com/@terasanki" target="_blank">
-          YOUTUBE ↗
-        </a>
-
-        <a href="https://www.instagram.com/terasanki/" target="_blank">
-          INSTAGRAM ↗
-        </a>
-
-      </div>
-
-    </div>
-
-  </section>
-
-</main>
-
-
-<footer class="footer">
-
-  <span>© 2026 SANKI MUSIC</span>
-
-  <span>Gurdaspur, Punjab, India</span>
-
-</footer>
-
-
-<!-- CINEMATIC VIDEO ENGINE -->
-
-<script>
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const videoList = [
-
-    "assets/videos/IMG_7999_20261017132345.mp4"
-
-    // Add more actual video paths here:
-    // "assets/videos/your-next-video.mp4",
-    // "assets/videos/another-video.mp4",
-
-  ];
-
-  const videoA = document.getElementById("bgVideo1");
-  const videoB = document.getElementById("bgVideo2");
-
-  let current = videoA;
-  let next = videoB;
-  let index = 0;
-  let switching = false;
-
-  function startVideo() {
-
-    current.src = videoList[index];
-    current.muted = true;
-    current.load();
-
-    current.oncanplay = async () => {
-
-      try {
-
-        await current.play();
-        current.classList.add("active");
-
-      } catch(error) {
-
-        console.log("Video autoplay error:", error);
-
-      }
-
-    };
-
-    current.onended = switchVideo;
-
-  }
-
-  function switchVideo() {
-
-    if(switching || videoList.length === 0) return;
-
-    switching = true;
-
-    index = (index + 1) % videoList.length;
-
-    next.src = videoList[index];
-    next.muted = true;
-    next.load();
-
-    next.oncanplay = async () => {
-
-      try {
-
-        await next.play();
-
-        next.classList.add("active");
-        current.classList.remove("active");
-
-        const previous = current;
-
-        current = next;
-        next = previous;
-
-        current.onended = switchVideo;
-
-        switching = false;
-
-      } catch(error) {
-
-        switching = false;
-
-        console.log("Video switch error:", error);
-
-      }
-
-    };
-
-  }
-
-  if(videoList.length > 0) {
-    startVideo();
-  }
-
-});
-
-
-/* SCROLL REVEAL */
-
-const revealObserver = new IntersectionObserver((entries) => {
-
-  entries.forEach(entry => {
-
-    if(entry.isIntersecting) {
-
-      entry.target.classList.add("visible");
-
-      revealObserver.unobserve(entry.target);
-
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-  });
+    html {
+      scroll-behavior: smooth;
+      background: #050505;
+    }
 
-}, {
-  threshold: 0.12
-});
+    body {
+      margin: 0;
+      background: #050505;
+      color: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
 
-document.querySelectorAll(".ts-reveal").forEach(element => {
+    body.intro-playing {
+      overflow: hidden;
+    }
 
-  revealObserver.observe(element);
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-});
+    /* INTRO VIDEO */
+
+    .intro-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 1.5s ease, visibility 1.5s ease;
+    }
+
+    .intro-screen video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .intro-screen.finished {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* BACKGROUND VIDEO */
+
+    .cinematic-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .cinematic-bg video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.8s ease;
+    }
+
+    .cinematic-bg video.active {
+      opacity: 1;
+    }
+
+    .cinematic-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.48), rgba(0,0,0,.3) 45%, #050505 100%),
+        linear-gradient(to right, rgba(0,0,0,.55), transparent);
+    }
+
+    /* HEADER */
+
+    .header {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      padding: 25px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      background: linear-gradient(to bottom, rgba(0,0,0,.65), transparent);
+    }
+
+    .brand {
+      font-size: 17px;
+      letter-spacing: 3px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .brand b {
+      font-weight: 900;
+    }
+
+    .header nav {
+      display: flex;
+      gap: 27px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header nav a {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #ddd;
+      transition: .3s;
+    }
+
+    .header nav a:hover {
+      color: #fff;
+      opacity: .65;
+    }
+
+    /* PAGE CONTENT */
+
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    .container {
+      width: min(1180px, 88%);
+      margin: auto;
+    }
+
+    .section {
+      position: relative;
+      min-height: 75vh;
+      padding: 120px 0;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,.09);
+    }
+
+    .eyebrow {
+      color: #aaa;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .display {
+      font-size: clamp(65px, 12vw, 155px);
+      font-weight: 900;
+      line-height: .85;
+      letter-spacing: -7px;
+      margin: 0 0 30px;
+      text-transform: uppercase;
+    }
+
+    .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px #fff;
+    }
+
+    .sub {
+      max-width: 550px;
+      color: #ccc;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 20px 10px 0 0;
+      padding: 15px 23px;
+      border: 1px solid rgba(255,255,255,.6);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: .3s;
+    }
+
+    .btn:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    .btn.primary {
+      background: #fff;
+      color: #000;
+    }
+
+    .btn.primary:hover {
+      background: transparent;
+      color: #fff;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 0 130px;
+    }
+
+    .hero .container {
+      width: min(1180px, 88%);
+    }
+
+    .hero .sub {
+      margin-top: 30px;
+    }
+
+    /* INTRO TEXT */
+
+    .intro-copy {
+      max-width: 850px;
+    }
+
+    .intro-copy h2 {
+      font-size: clamp(35px, 6vw, 75px);
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin: 0 0 25px;
+    }
+
+    .intro-copy p {
+      color: #aaa;
+      max-width: 680px;
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    /* TIMELINE */
+
+    .timeline {
+      width: 100%;
+      max-width: 850px;
+      border-left: 1px solid rgba(255,255,255,.35);
+      padding-left: 35px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 55px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -41px;
+      top: 5px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .timeline-item .year {
+      color: #777;
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+
+    .timeline-item h3 {
+      font-size: clamp(25px, 4vw, 42px);
+      margin: 0 0 12px;
+      text-transform: uppercase;
+    }
+
+    .timeline-item p {
+      color: #aaa;
+      line-height: 1.8;
+      max-width: 650px;
+      margin: 0;
+    }
+
+    /* RELEASES */
+
+    .section-heading {
+      font-size: clamp(45px, 8vw, 95px);
+      text-transform: uppercase;
+      letter-spacing: -4px;
+      margin: 0 0 45px;
+    }
+
+    .release-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .release-card {
+      min-height: 230px;
+      padding: 35px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.3);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: .4s;
+    }
+
+    .release-card:hover {
+      background: rgba(255,255,255,.08);
+      transform: translateY(-5px);
+    }
+
+    .release-card span {
+      color: #999;
+      font-size: 10px;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+    }
+
+    .release-card h3 {
+      font-size: clamp(25px, 4vw, 43px);
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .release-card p {
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* VISUAL WORLD */
+
+    .visual-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .visual-card {
+      min-height: 270px;
+      padding: 30px;
+      display: flex;
+      align-items: flex-end;
+      border: 1px solid rgba(255,255,255,.2);
+      background:
+        linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.05));
+      transition: .4s;
+    }
+
+    .visual-card:hover {
+      transform: scale(1.015);
+      border-color: #fff;
+    }
+
+    .visual-card h3 {
+      font-size: 32px;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+
+    .visual-card p {
+      color: #bbb;
+      font-size: 13px;
+    }
+
+    /* BEATS */
+
+    .beats-panel {
+      width: 100%;
+      padding: 65px;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.45);
+    }
+
+    .beats-panel h2 {
+      font-size: clamp(45px, 8vw, 95px);
+      line-height: .95;
+      text-transform: uppercase;
+      margin: 0 0 25px;
+    }
+
+    .beats-panel p {
+      color: #bbb;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    /* ABOUT */
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-layout h2 {
+      font-size: clamp(45px, 7vw, 85px);
+      line-height: .95;
+      text-transform: uppercase;
+      margin: 0 0 25px;
+    }
+
+    .about-layout p {
+      color: #aaa;
+      line-height: 1.9;
+    }
+
+    .about-side {
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 35px;
+    }
+
+    .about-side div {
+      padding: 17px 0;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      font-size: 12px;
+    }
+
+    .about-side div:last-child {
+      border-bottom: 0;
+    }
+
+    .about-side span:first-child {
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* FINAL SECTION */
+
+    .final-section {
+      min-height: 75vh;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .final-section h2 {
+      font-size: clamp(55px, 10vw, 120px);
+      line-height: .9;
+      text-transform: uppercase;
+      margin: 0 0 25px;
+    }
+
+    .final-section p {
+      color: #aaa;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      position: relative;
+      z-index: 2;
+      padding: 30px 6%;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: #777;
+      font-size: 10px;
+      letter-spacing: 2px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* SCROLL REVEAL */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(55px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* SCROLL PROGRESS */
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: #fff;
+      z-index: 100001;
+    }
+
+    /* MOBILE */
+
+    @media(max-width: 750px) {
+      .header {
+        padding: 20px 5%;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .header nav {
+        gap: 15px;
+      }
+
+      .header nav a {
+        font-size: 9px;
+      }
+
+      .display {
+        letter-spacing: -4px;
+      }
+
+      .section {
+        min-height: auto;
+        padding: 90px 0;
+      }
+
+      .hero {
+        min-height: 80vh;
+      }
+
+      .release-grid,
+      .visual-grid,
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .beats-panel {
+        padding: 30px;
+      }
+
+      .about-layout {
+        gap: 30px;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="intro-playing">
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- INTRO VIDEO: PLAYS FIRST -->
+
+  <div class="intro-screen" id="introScreen">
+    <video
+      id="introVideo"
+      autoplay
+      muted
+      playsinline
+      preload="auto">
+    </video>
+  </div>
+
+  <!-- CINEMATIC BACKGROUND VIDEOS -->
+
+  <div class="cinematic-bg">
+    <video id="bgVideo1" class="active" muted playsinline preload="auto"></video>
+    <video id="bgVideo2" muted playsinline preload="auto"></video>
+    <div class="cinematic-overlay"></div>
+  </div>
+
+  <!-- HEADER -->
+
+  <header class="header">
+    <a class="brand" href="index.html"><b>SANKI</b> MUSIC</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="music.html">Music</a>
+      <a href="videos.html">Videos</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="beats.html">Sanki Beats ↗</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Sanki Music / Gurdaspur, Punjab</div>
+
+        <h1 class="display">
+          TERA<br>
+          <span class="outline">SANKI.</span>
+        </h1>
+
+        <p class="sub">
+          Punjabi Rapper · Singer · Lyricist.
+          Independent sound. Real stories. No limits.
+        </p>
+
+        <a class="btn primary" href="music.html">Explore Music ↗</a>
+        <a class="btn" href="beats.html">Discover Sanki Beats ↗</a>
+      </div>
+    </section>
+
+    <!-- ARTIST INTRO -->
+
+    <section class="section">
+      <div class="container reveal">
+        <div class="intro-copy">
+          <div class="eyebrow">01 / The Artist</div>
+
+          <h2>
+            Not Just Music.<br>
+            It's A Journey.
+          </h2>
+
+          <p>
+            Tera Sanki is an independent Punjabi rapper, singer and lyricist
+            from Gurdaspur, Punjab. Building his own identity through music,
+            visuals and storytelling.
+          </p>
+
+          <p>
+            From writing lyrics to recording vocals and shaping the visual
+            world around every release, the journey is built independently.
+            Every track represents a different chapter.
+          </p>
+
+          <a class="btn" href="about.html">More About Me ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOURNEY -->
+
+    <section class="section">
+      <div class="container reveal">
+        <div class="eyebrow">02 / The Journey</div>
+        <h2 class="section-heading">My Story.</h2>
+
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="year">THE BEGINNING</div>
+            <h3>Finding My Sound</h3>
+            <p>
+              Started exploring music, writing lyrics and developing a
+              personal sound through Punjabi hip-hop and trap.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="year">A NEW CHAPTER</div>
+            <h3>NO MERCY</h3>
+            <p>
+              One of the important chapters in the independent music journey.
+              From creating the song to working on its visual presentation,
+              every part was a learning experience.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="year">7 AUGUST</div>
+            <h3>PYAAR KUDE</h3>
+            <p>
+              A different emotional side of the artist, bringing melody
+              and storytelling into the sound.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="year">1 SEPTEMBER</div>
+            <h3>UNPREDICTABLE</h3>
+            <p>
+              Another independent release, continuing to explore
+              a distinct musical identity.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="year">OCTOBER 2026</div>
+            <h3>BATI BORE</h3>
+            <p>
+              A hard-hitting Punjabi track with an aggressive energy,
+              representing another step in the journey.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="year">THE NEXT CHAPTER</div>
+            <h3>More To Come.</h3>
+            <p>
+              New music, new visuals and new stories.
+              The journey is still in progress.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- MUSIC -->
+
+    <section class="section">
+      <div class="container reveal">
+        <div class="eyebrow">03 / Discography</div>
+        <h2 class="section-heading">The Music.</h2>
+
+        <div class="release-grid">
+
+          <a class="release-card" href="music.html">
+            <span>OFFICIAL RELEASE</span>
+            <h3>NO MERCY</h3>
+            <p>An important chapter of the independent journey.</p>
+          </a>
+
+          <a class="release-card" href="music.html">
+            <span>7 AUGUST</span>
+            <h3>PYAAR KUDE</h3>
+            <p>Melody, emotions and storytelling.</p>
+          </a>
+
+          <a class="release-card" href="music.html">
+            <span>1 SEPTEMBER</span>
+            <h3>UNPREDICTABLE</h3>
+            <p>A different sound and a new chapter.</p>
+          </a>
+
+          <a class="release-card" href="music.html">
+            <span>OCTOBER 2026</span>
+            <h3>BATI BORE</h3>
+            <p>Aggressive Punjabi energy.</p>
+          </a>
+
+        </div>
+
+        <a class="btn" href="music.html">View All Music ↗</a>
+      </div>
+    </section>
+
+    <!-- VISUAL WORLD -->
+
+    <section class="section">
+      <div class="container reveal">
+        <div class="eyebrow">04 / Beyond The Music</div>
+        <h2 class="section-heading">Visual World.</h2>
+
+        <div class="visual-grid">
+
+          <a class="visual-card" href="gallery.html">
+            <div>
+              <h3>Gallery</h3>
+              <p>Frames, moments and memories.</p>
+            </div>
+          </a>
+
+          <a class="visual-card" href="videos.html">
+            <div>
+              <h3>Videos</h3>
+              <p>Official music videos and visual stories.</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SANKI BEATS -->
+
+    <section class="section">
+      <div class="container reveal">
+        <div class="beats-panel">
+          <div class="eyebrow">05 / Production & Sound</div>
+
+          <h2>SANKI<br>BEATS.</h2>
+
+          <p>
+            Explore the sound of Sanki Beats.
+            Discover beats and production projects built around
+            Punjabi hip-hop, trap and modern sounds.
+          </p>
+
+          <a class="btn primary" href="beats.html">Explore Sanki Beats ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+
+    <section class="section">
+      <div class="container reveal">
+        <div class="about-layout">
+
+          <div>
+            <div class="eyebrow">06 / About</div>
+
+            <h2>Independent.<br>Unfiltered.</h2>
+
+            <p>
+              Tera Sanki is building an independent musical identity
+              from Gurdaspur, Punjab. A journey driven by lyrics,
+              vocals, creativity and a passion for music.
+            </p>
+
+            <p>
+              The goal is simple: create original music, build a
+              genuine audience and keep moving forward.
+            </p>
+
+            <a class="btn" href="about.html">Read More ↗</a>
+          </div>
+
+          <div class="about-side">
+            <div>
+              <span>Artist</span>
+              <strong>Tera Sanki</strong>
+            </div>
+
+            <div>
+              <span>Based In</span>
+              <strong>Gurdaspur, Punjab</strong>
+            </div>
+
+            <div>
+              <span>Genre</span>
+              <strong>Punjabi Hip-Hop / Trap</strong>
+            </div>
+
+            <div>
+              <span>Label</span>
+              <strong>Sanki Music</strong>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL -->
+
+    <section class="section final-section">
+      <div class="container reveal">
+        <div class="eyebrow">The Journey Continues</div>
+
+        <h2>
+          THIS IS<br>
+          <span class="outline">SANKI.</span>
+        </h2>
+
+        <p>Stay connected. More music coming soon.</p>
+
+        <a class="btn primary" href="https://www.youtube.com/@terasanki" target="_blank" rel="noopener">
+          YouTube ↗
+        </a>
+
+        <a class="btn" href="https://www.instagram.com/terasanki/" target="_blank" rel="noopener">
+          Instagram ↗
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 SANKI MUSIC</span>
+    <span>GURDASPUR, PUNJAB, INDIA</span>
+  </footer>
+
+  <script src="config.js" defer></script>
+  <script src="js/site.js" defer></script>
+
+  <script>
+    /* =====================================
+       INTRO VIDEO ENGINE
+    ===================================== */
+
+    const introScreen = document.getElementById("introScreen");
+    const introVideo = document.getElementById("introVideo");
+
+    // INTRO VIDEO PATH — CHANGE THIS IF NEEDED
+    const introVideoPath = "assets/videos/intro.mp4";
+
+    let introFinished = false;
+
+    function finishIntro() {
+      if (introFinished) return;
+
+      introFinished = true;
+
+      introScreen.classList.add("finished");
+      document.body.classList.remove("intro-playing");
+
+      setTimeout(() => {
+        introScreen.remove();
+      }, 1600);
+    }
+
+    introVideo.src = introVideoPath;
+
+    introVideo.addEventListener("ended", finishIntro, { once: true });
+    introVideo.addEventListener("error", finishIntro, { once: true });
+
+    introVideo.play().catch(() => {
+      // If autoplay is blocked, don't leave the visitor stuck.
+      finishIntro();
+    });
 
 
-/* SCROLL PROGRESS */
+    /* =====================================
+       BACKGROUND VIDEO ENGINE
+    ===================================== */
 
-window.addEventListener("scroll", () => {
+    const backgroundVideos = [
+      "assets/videos/IMG_7999_20261017132345.mp4"
 
-  const scrollTop = window.scrollY;
+      // Add more videos here:
+      // "assets/videos/video2.mp4",
+      // "assets/videos/video3.mp4",
+      // "assets/videos/video4.mp4"
+    ];
 
-  const scrollHeight =
-    document.documentElement.scrollHeight - window.innerHeight;
+    const bgVideo1 = document.getElementById("bgVideo1");
+    const bgVideo2 = document.getElementById("bgVideo2");
 
-  const progress = scrollHeight > 0
-    ? (scrollTop / scrollHeight) * 100
-    : 0;
+    let currentIndex = 0;
+    let activeVideo = bgVideo1;
+    let nextVideo = bgVideo2;
+    let switching = false;
 
-  document.getElementById("tsProgress").style.width =
-    progress + "%";
+    function startBackground() {
+      if (!backgroundVideos.length) return;
 
-}, { passive: true });
+      activeVideo.src = backgroundVideos[currentIndex];
+      activeVideo.load();
 
-</script>
+      activeVideo.addEventListener("canplay", () => {
+        activeVideo.classList.add("active");
+        activeVideo.play().catch(() => {});
+      }, { once: true });
+    }
+
+    function switchBackground() {
+      if (switching || backgroundVideos.length === 0) return;
+
+      switching = true;
+
+      currentIndex = (currentIndex + 1) % backgroundVideos.length;
+
+      nextVideo.src = backgroundVideos[currentIndex];
+      nextVideo.load();
+
+      nextVideo.addEventListener("canplay", function handleReady() {
+        nextVideo.removeEventListener("canplay", handleReady);
+
+        nextVideo.currentTime = 0;
+        nextVideo.play().catch(() => {});
+
+        nextVideo.classList.add("active");
+        activeVideo.classList.remove("active");
+
+        setTimeout(() => {
+          activeVideo.pause();
+          activeVideo.removeAttribute("src");
+          activeVideo.load();
+
+          const oldVideo = activeVideo;
+          activeVideo = nextVideo;
+          nextVideo = oldVideo;
+
+          switching = false;
+        }, 1900);
+      }, { once: true });
+    }
+
+    bgVideo1.addEventListener("ended", switchBackground);
+    bgVideo2.addEventListener("ended", switchBackground);
+
+    bgVideo1.addEventListener("error", () => {
+      if (backgroundVideos.length > 1) switchBackground();
+    });
+
+    bgVideo2.addEventListener("error", () => {
+      if (backgroundVideos.length > 1) switchBackground();
+    });
+
+    startBackground();
+
+
+    /* =====================================
+       SCROLL REVEAL ANIMATION
+    ===================================== */
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    revealElements.forEach(element => {
+      observer.observe(element);
+    });
+
+
+    /* =====================================
+       SCROLL PROGRESS BAR
+    ===================================== */
+
+    const progressBar = document.getElementById("scrollProgress");
+
+    window.addEventListener("scroll", () => {
+      const scrollTop = window.scrollY;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+      const progress = scrollHeight > 0
+        ? (scrollTop / scrollHeight) * 100
+        : 0;
+
+      progressBar.style.width = progress + "%";
+    });
+  </script>
 
 </body>
 </html>
