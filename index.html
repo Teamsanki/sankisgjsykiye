@@ -1,289 +1,165 @@
-<script>
-document.addEventListener("DOMContentLoaded", function () {
 
-  /* =====================================
-     INTRO VIDEO ENGINE
-     MAXIMUM 10 SECONDS
-  ===================================== */
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VIDEOS — Tera Sanki</title>
 
-  const introScreen = document.getElementById("introScreen");
-  const introVideo = document.getElementById("introVideo");
+  <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
 
-  const introVideoPath = "assets/videos/intro.mp4";
+  <script src="config.js" defer></script>
+  <script src="js/site.js" defer></script>
+</head>
 
-  let introFinished = false;
-  let introTimer = null;
+<body>
 
-  function finishIntro() {
+  <!-- Background Video Slideshow -->
+  <div class="video-background">
+    <video id="bgVideo1" autoplay muted playsinline></video>
+    <video id="bgVideo2" muted playsinline></video>
+    <div class="video-overlay"></div>
+  </div>
 
-    if (introFinished) return;
+  <header class="header">
+    <a class="brand" href="index.html"><b>SANKI</b> MUSIC</a>
 
-    introFinished = true;
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="music.html">Music</a>
+      <a href="videos.html">Videos</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="beats.html">Sanki Beats ↗</a>
+    </nav>
+  </header>
 
-    clearTimeout(introTimer);
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Sanki Music / Tera Sanki</div>
+        <h1 class="display">VIDEOS</h1>
+        <p class="sub">Official music videos and visual stories.</p>
+      </div>
+    </section>
+  </main>
 
-    // Fade out intro
-    if (introScreen) {
-      introScreen.classList.add("finished");
+  <footer class="footer">
+    <span>© 2026 SANKI MUSIC</span>
+    <span>Gurdaspur, Punjab, India</span>
+  </footer>
+
+  <style>
+    .video-background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: #000;
     }
 
-    // Fade in website
-    document.body.classList.remove("intro-playing");
-    document.body.classList.add("site-visible");
+    .video-background video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
 
-    // Remove intro after transition
-    setTimeout(() => {
-      if (introScreen) {
-        introScreen.remove();
+    .video-background video.active {
+      opacity: 1;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.50);
+      pointer-events: none;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      // Add your video filenames here
+      const videos = [
+        "assets/videos/video1.mp4",
+        "assets/videos/video2.mp4",
+        "assets/videos/video3.mp4",
+        "assets/videos/video4.mp4"
+      ];
+
+      const v1 = document.getElementById("bgVideo1");
+      const v2 = document.getElementById("bgVideo2");
+
+      let index = 0;
+      let current = v1;
+      let next = v2;
+      let busy = false;
+
+      function playNext() {
+        if (busy) return;
+        busy = true;
+
+        index = (index + 1) % videos.length;
+
+        next.src = videos[index];
+        next.muted = true;
+        next.load();
+
+        next.oncanplay = async () => {
+          try {
+            await next.play();
+
+            next.classList.add("active");
+            current.classList.remove("active");
+
+            const old = current;
+            current = next;
+            next = old;
+
+            busy = false;
+          } catch (error) {
+            busy = false;
+            console.log("Video playback error:", error);
+          }
+        };
       }
-    }, 1600);
-  }
 
-  if (introScreen && introVideo) {
+      function start() {
+        current.src = videos[index];
+        current.muted = true;
+        current.load();
 
-    introVideo.muted = true;
-    introVideo.defaultMuted = true;
-    introVideo.autoplay = true;
-    introVideo.playsInline = true;
+        current.oncanplay = async () => {
+          try {
+            await current.play();
+            current.classList.add("active");
+          } catch (error) {
+            console.log("Autoplay error:", error);
+          }
+        };
 
-    introVideo.setAttribute("muted", "");
-    introVideo.setAttribute("playsinline", "");
-    introVideo.setAttribute("webkit-playsinline", "");
+        current.onended = playNext;
+      }
 
-    // Maximum 10-second timer
-    introTimer = setTimeout(() => {
-      finishIntro();
-    }, 10000);
+      // Start slideshow
+      if (videos.length > 0) {
+        start();
+      }
 
-    // Video ends naturally
-    introVideo.addEventListener("ended", finishIntro, {
-      once: true
-    });
-
-    // Video loading or playback error
-    introVideo.addEventListener("error", function () {
-      console.error("INTRO VIDEO ERROR:", introVideo.error);
-      finishIntro();
-    }, { once: true });
-
-    // Load intro
-    introVideo.src = introVideoPath;
-    introVideo.load();
-
-    // Play intro
-    const playPromise = introVideo.play();
-
-    if (playPromise !== undefined) {
-
-      playPromise.catch(function (error) {
-
-        console.error("INTRO AUTOPLAY ERROR:", error);
-
-        // Never leave the user on a blank screen
-        finishIntro();
-
+      // Continue looping after every video
+      [v1, v2].forEach(video => {
+        video.addEventListener("ended", () => {
+          if (!busy) playNext();
+        });
       });
 
-    }
-
-  } else {
-
-    // If intro HTML is missing, show website
-    finishIntro();
-
-  }
-
-
-  /* =====================================
-     BACKGROUND VIDEO ENGINE
-  ===================================== */
-
-  const backgroundVideos = [
-    "assets/videos/IMG_7999_20261017132345.mp4"
-
-    // Add more videos:
-    // "assets/videos/video2.mp4",
-    // "assets/videos/video3.mp4"
-  ];
-
-  const bgVideo1 = document.getElementById("bgVideo1");
-  const bgVideo2 = document.getElementById("bgVideo2");
-
-  let currentIndex = 0;
-  let activeVideo = bgVideo1;
-  let nextVideo = bgVideo2;
-  let switching = false;
-
-  function startBackground() {
-
-    if (!activeVideo || backgroundVideos.length === 0) return;
-
-    activeVideo.src = backgroundVideos[0];
-    activeVideo.muted = true;
-    activeVideo.playsInline = true;
-
-    // Single video: continuous loop
-    if (backgroundVideos.length === 1) {
-
-      activeVideo.loop = true;
-
-    }
-
-    activeVideo.addEventListener("canplay", function () {
-
-      activeVideo.classList.add("active");
-
-      activeVideo.play().catch(error => {
-        console.warn("Background video autoplay blocked:", error);
-      });
-
-    }, { once: true });
-
-    activeVideo.addEventListener("error", function () {
-      console.error("Background video could not load.");
-    }, { once: true });
-
-    activeVideo.load();
-  }
-
-
-  /* =====================================
-     BACKGROUND VIDEO CROSSFADE
-     FOR MULTIPLE VIDEOS
-  ===================================== */
-
-  function switchBackground() {
-
-    if (
-      switching ||
-      backgroundVideos.length < 2 ||
-      !nextVideo ||
-      !activeVideo
-    ) return;
-
-    switching = true;
-
-    currentIndex = (currentIndex + 1) % backgroundVideos.length;
-
-    const incoming = nextVideo;
-    const outgoing = activeVideo;
-
-    incoming.src = backgroundVideos[currentIndex];
-    incoming.muted = true;
-    incoming.playsInline = true;
-    incoming.loop = false;
-
-    incoming.load();
-
-    incoming.addEventListener("canplay", function ready() {
-
-      incoming.removeEventListener("canplay", ready);
-
-      incoming.currentTime = 0;
-
-      incoming.play().catch(error => {
-        console.warn("Next background video failed:", error);
-      });
-
-      incoming.classList.add("active");
-      outgoing.classList.remove("active");
-
-      setTimeout(() => {
-
-        outgoing.pause();
-        outgoing.removeAttribute("src");
-        outgoing.load();
-
-        activeVideo = incoming;
-        nextVideo = outgoing;
-
-        switching = false;
-
-      }, 1900);
-
-    }, { once: true });
-  }
-
-  if (bgVideo1 && bgVideo2) {
-
-    bgVideo1.addEventListener("ended", switchBackground);
-    bgVideo2.addEventListener("ended", switchBackground);
-
-  }
-
-  startBackground();
-
-
-  /* =====================================
-     SCROLL REVEAL
-  ===================================== */
-
-  const revealElements = document.querySelectorAll(".reveal");
-
-  if ("IntersectionObserver" in window) {
-
-    const observer = new IntersectionObserver((entries) => {
-
-      entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-          entry.target.classList.add("visible");
-
-          observer.unobserve(entry.target);
-
-        }
-
-      });
-
-    }, {
-      threshold: 0.15
     });
+  </script>
 
-    revealElements.forEach(element => {
-      observer.observe(element);
-    });
-
-  } else {
-
-    revealElements.forEach(element => {
-      element.classList.add("visible");
-    });
-
-  }
-
-
-  /* =====================================
-     SCROLL PROGRESS BAR
-  ===================================== */
-
-  const progressBar = document.getElementById("scrollProgress");
-
-  function updateProgress() {
-
-    if (!progressBar) return;
-
-    const scrollTop = window.scrollY;
-
-    const scrollHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
-
-    const progress = scrollHeight > 0
-      ? (scrollTop / scrollHeight) * 100
-      : 0;
-
-    progressBar.style.width = progress + "%";
-
-  }
-
-  window.addEventListener("scroll", updateProgress, {
-    passive: true
-  });
-
-  updateProgress();
-
-});
-</script>
-
-<script src="config.js" defer></script>
-<script src="js/site.js" defer></script>
+</body>
+</html>
