@@ -1,1 +1,251 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GALLERY — Tera Sanki</title><link rel="icon" href="assets/icons/favicon.svg"><link rel="stylesheet" href="css/style.css"><script src="config.js" defer></script><script src="js/site.js" defer></script></head><body><header class="header"><a class="brand" href="index.html"><b>SANKI</b> MUSIC</a><nav><a href="index.html">Home</a><a href="music.html">Music</a><a href="videos.html">Videos</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="beats.html">Sanki Beats ↗</a></nav></header><main><section class="hero"><div class="container"><div class="eyebrow">Sanki Music / Tera Sanki</div><h1 class="display">GALLERY</h1><p class="sub">Artist portraits and behind-the-scenes moments.</p></div></section></main><footer class="footer"><span>© 2026 SANKI MUSIC</span><span>Gurdaspur, Punjab, India</span></footer></body></html>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>GALLERY — Tera Sanki | Sanki Music</title>
+
+  <meta name="description" content="Official Tera Sanki photo gallery featuring artist portraits, music shoots and behind-the-scenes moments.">
+
+  <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="config.js" defer></script>
+  <script src="js/site.js" defer></script>
+
+  <style>
+    .gallery-section {
+      padding: 70px 0 110px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      background: #151515;
+      border: 1px solid #252525;
+      cursor: pointer;
+      aspect-ratio: 4 / 5;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .5s ease, opacity .4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      opacity: .85;
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 35px 18px 18px;
+      background: linear-gradient(transparent, #000d);
+      color: white;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .gallery-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,.96);
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .gallery-lightbox.active {
+      display: flex;
+    }
+
+    .gallery-lightbox img {
+      max-width: 95%;
+      max-height: 85vh;
+      object-fit: contain;
+    }
+
+    .gallery-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+      background: none;
+      border: 0;
+    }
+
+    @media(max-width:750px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+    }
+
+    @media(max-width:450px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a class="brand" href="index.html"><b>SANKI</b> MUSIC</a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="music.html">Music</a>
+    <a href="videos.html">Videos</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="beats.html">Sanki Beats ↗</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">Sanki Music / Tera Sanki</div>
+      <h1 class="display">GALLERY</h1>
+      <p class="sub">
+        Artist portraits and behind-the-scenes moments.
+      </p>
+    </div>
+  </section>
+
+  <section class="gallery-section">
+    <div class="container">
+
+      <div class="gallery-grid">
+
+        <!-- IMAGE 01 -->
+        <div class="gallery-item">
+          <img src="assets/images/gallery/photo1.jpg"
+               alt="Tera Sanki Artist Portrait"
+               loading="lazy">
+          <div class="gallery-caption">TERA SANKI</div>
+        </div>
+
+        <!-- IMAGE 02 -->
+        <div class="gallery-item">
+          <img src="assets/images/gallery/photo2.jpg"
+               alt="Tera Sanki Music"
+               loading="lazy">
+          <div class="gallery-caption">MUSIC & VISION</div>
+        </div>
+
+        <!-- IMAGE 03 -->
+        <div class="gallery-item">
+          <img src="assets/images/gallery/photo3.jpg"
+               alt="Tera Sanki Behind The Scenes"
+               loading="lazy">
+          <div class="gallery-caption">BEHIND THE SCENES</div>
+        </div>
+
+        <!-- IMAGE 04 -->
+        <div class="gallery-item">
+          <img src="assets/images/gallery/photo4.jpg"
+               alt="Tera Sanki"
+               loading="lazy">
+          <div class="gallery-caption">THE ARTIST</div>
+        </div>
+
+        <!-- IMAGE 05 -->
+        <div class="gallery-item">
+          <img src="assets/images/gallery/photo5.jpg"
+               alt="Tera Sanki Shoot"
+               loading="lazy">
+          <div class="gallery-caption">MOMENTS</div>
+        </div>
+
+        <!-- IMAGE 06 -->
+        <div class="gallery-item">
+          <img src="assets/images/gallery/photo6.jpg"
+               alt="Tera Sanki"
+               loading="lazy">
+          <div class="gallery-caption">SANKI MUSIC</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FULLSCREEN IMAGE PREVIEW -->
+
+<div class="gallery-lightbox" id="galleryLightbox">
+  <button class="gallery-close" id="galleryClose"
+          aria-label="Close image preview">&times;</button>
+  <img id="lightboxImage" src="" alt="Gallery preview">
+</div>
+
+<script>
+  const galleryItems = document.querySelectorAll(".gallery-item");
+  const lightbox = document.getElementById("galleryLightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const closeButton = document.getElementById("galleryClose");
+
+  galleryItems.forEach(item => {
+    const img = item.querySelector("img");
+
+    img.addEventListener("error", () => {
+      console.error("Gallery image not found:", img.src);
+    });
+
+    item.addEventListener("click", () => {
+      if (!img.complete || img.naturalWidth === 0) return;
+
+      lightboxImage.src = img.src;
+      lightbox.classList.add("active");
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+    lightboxImage.src = "";
+  }
+
+  closeButton.addEventListener("click", closeLightbox);
+
+  lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeLightbox();
+  });
+</script>
+
+<footer class="footer">
+  <span>© 2026 SANKI MUSIC</span>
+  <span>Gurdaspur, Punjab, India</span>
+</footer>
+
+</body>
+</html>
