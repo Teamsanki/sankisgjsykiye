@@ -1,74 +1,62 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* =====================================
-     INTRO VIDEO ENGINE
-  ===================================== */
+/* =====================================
+   INTRO VIDEO - EXACT 10 SECONDS
+===================================== */
 
-  const introScreen = document.getElementById("introScreen");
-  const introVideo = document.getElementById("introVideo");
-  const enterSite = document.getElementById("enterSite");
+const introScreen = document.getElementById("introScreen");
+const introVideo = document.getElementById("introVideo");
 
-  // IMPORTANT: YAHAN APNI ACTUAL INTRO VIDEO KA NAAM LIKHNA
-  const introVideoPath = "assets/videos/intro.mp4";
+const introVideoPath = "assets/videos/intro.mp4";
 
-  let introFinished = false;
+let introFinished = false;
+let introTimer;
 
-  function finishIntro() {
-    if (introFinished) return;
+function finishIntro() {
 
-    introFinished = true;
+  if (introFinished) return;
 
-    introScreen.classList.add("finished");
-    document.body.classList.remove("intro-playing");
+  introFinished = true;
 
-    setTimeout(() => {
-      introScreen.remove();
-    }, 1600);
-  }
+  clearTimeout(introTimer);
 
-  if (introVideo && introScreen) {
+  introScreen.classList.add("finished");
 
-    introVideo.muted = true;
-    introVideo.autoplay = true;
-    introVideo.playsInline = true;
+  document.body.classList.remove("intro-playing");
 
-    introVideo.src = introVideoPath;
+  document.body.classList.add("site-visible");
 
-    introVideo.addEventListener("ended", finishIntro, { once: true });
+  setTimeout(() => {
+    introScreen.remove();
+  }, 1600);
+}
 
-    introVideo.addEventListener("error", () => {
-      console.error("Intro video not found:", introVideoPath);
-      finishIntro();
-    }, { once: true });
+if (introScreen && introVideo) {
 
-    // Safety fallback if video never loads
-    const introTimeout = setTimeout(() => {
-      console.warn("Intro video loading timeout");
-      finishIntro();
-    }, 20000);
+  introVideo.muted = true;
+  introVideo.playsInline = true;
+  introVideo.src = introVideoPath;
 
-    introVideo.addEventListener("ended", () => {
-      clearTimeout(introTimeout);
-    }, { once: true });
+  // 10-second maximum intro
+  introTimer = setTimeout(finishIntro, 10000);
 
-    introVideo.load();
+  introVideo.addEventListener("ended", finishIntro, {
+    once: true
+  });
 
-    introVideo.play().catch(error => {
-      console.warn("Autoplay blocked:", error);
+  introVideo.addEventListener("error", () => {
+    console.error("Intro video failed to load:", introVideoPath);
+    finishIntro();
+  }, { once: true });
 
-      enterSite.style.display = "block";
+  introVideo.load();
 
-      enterSite.addEventListener("click", () => {
-        introVideo.play().then(() => {
-          enterSite.style.display = "none";
-        }).catch(() => {
-          finishIntro();
-        });
-      }, { once: true });
-    });
-  }
-
+  introVideo.play().catch(error => {
+    console.error("Intro autoplay failed:", error);
+    finishIntro();
+  });
+}
 
   /* =====================================
      BACKGROUND VIDEO ENGINE
