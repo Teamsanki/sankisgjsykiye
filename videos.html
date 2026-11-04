@@ -1,1 +1,165 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VIDEOS — Tera Sanki</title><link rel="icon" href="assets/icons/favicon.svg"><link rel="stylesheet" href="css/style.css"><script src="config.js" defer></script><script src="js/site.js" defer></script></head><body><header class="header"><a class="brand" href="index.html"><b>SANKI</b> MUSIC</a><nav><a href="index.html">Home</a><a href="music.html">Music</a><a href="videos.html">Videos</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="beats.html">Sanki Beats ↗</a></nav></header><main><section class="hero"><div class="container"><div class="eyebrow">Sanki Music / Tera Sanki</div><h1 class="display">VIDEOS</h1><p class="sub">Official music videos and visual stories.</p></div></section></main><footer class="footer"><span>© 2026 SANKI MUSIC</span><span>Gurdaspur, Punjab, India</span></footer></body></html>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VIDEOS — Tera Sanki</title>
+
+  <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="config.js" defer></script>
+  <script src="js/site.js" defer></script>
+</head>
+
+<body>
+
+  <!-- Background Video Slideshow -->
+  <div class="video-background">
+    <video id="bgVideo1" autoplay muted playsinline></video>
+    <video id="bgVideo2" muted playsinline></video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <header class="header">
+    <a class="brand" href="index.html"><b>SANKI</b> MUSIC</a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="music.html">Music</a>
+      <a href="videos.html">Videos</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="about.html">About</a>
+      <a href="beats.html">Sanki Beats ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Sanki Music / Tera Sanki</div>
+        <h1 class="display">VIDEOS</h1>
+        <p class="sub">Official music videos and visual stories.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 SANKI MUSIC</span>
+    <span>Gurdaspur, Punjab, India</span>
+  </footer>
+
+  <style>
+    .video-background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-background video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    .video-background video.active {
+      opacity: 1;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.50);
+      pointer-events: none;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      // Add your video filenames here
+      const videos = [
+        "assets/videos/video1.mp4",
+        "assets/videos/video2.mp4",
+        "assets/videos/video3.mp4",
+        "assets/videos/video4.mp4"
+      ];
+
+      const v1 = document.getElementById("bgVideo1");
+      const v2 = document.getElementById("bgVideo2");
+
+      let index = 0;
+      let current = v1;
+      let next = v2;
+      let busy = false;
+
+      function playNext() {
+        if (busy) return;
+        busy = true;
+
+        index = (index + 1) % videos.length;
+
+        next.src = videos[index];
+        next.muted = true;
+        next.load();
+
+        next.oncanplay = async () => {
+          try {
+            await next.play();
+
+            next.classList.add("active");
+            current.classList.remove("active");
+
+            const old = current;
+            current = next;
+            next = old;
+
+            busy = false;
+          } catch (error) {
+            busy = false;
+            console.log("Video playback error:", error);
+          }
+        };
+      }
+
+      function start() {
+        current.src = videos[index];
+        current.muted = true;
+        current.load();
+
+        current.oncanplay = async () => {
+          try {
+            await current.play();
+            current.classList.add("active");
+          } catch (error) {
+            console.log("Autoplay error:", error);
+          }
+        };
+
+        current.onended = playNext;
+      }
+
+      // Start slideshow
+      if (videos.length > 0) {
+        start();
+      }
+
+      // Continue looping after every video
+      [v1, v2].forEach(video => {
+        video.addEventListener("ended", () => {
+          if (!busy) playNext();
+        });
+      });
+
+    });
+  </script>
+
+</body>
+</html>
