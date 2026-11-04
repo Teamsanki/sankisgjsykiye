@@ -1,1 +1,629 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>THE JOURNEY — Tera Sanki</title><link rel="icon" href="assets/icons/favicon.svg"><link rel="stylesheet" href="css/style.css"><script src="config.js" defer></script><script src="js/site.js" defer></script></head><body><header class="header"><a class="brand" href="index.html"><b>SANKI</b> MUSIC</a><nav><a href="index.html">Home</a><a href="music.html">Music</a><a href="videos.html">Videos</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="beats.html">Sanki Beats ↗</a></nav></header><main><section class="hero"><div class="container"><div class="eyebrow">Sanki Music / Tera Sanki</div><h1 class="display">THE JOURNEY</h1><p class="sub">Optional artist timeline.</p></div></section></main><footer class="footer"><span>© 2026 SANKI MUSIC</span><span>Gurdaspur, Punjab, India</span></footer></body></html>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>THE JOURNEY — Tera Sanki | Sanki Music</title>
+  <meta name="description" content="The journey of Tera Sanki — an independent Punjabi rapper, singer and lyricist from Gurdaspur, Punjab. A story of dreams, struggle, music and identity.">
+
+  <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="config.js" defer></script>
+  <script src="js/site.js" defer></script>
+
+  <style>
+    .journey-page {
+      background: #080808;
+      color: #f5f5f5;
+      overflow: hidden;
+    }
+
+    .journey-page * {
+      box-sizing: border-box;
+    }
+
+    .journey-container {
+      width: min(1120px, 90%);
+      margin: auto;
+    }
+
+    .journey-label {
+      color: #aaa;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .journey-hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background:
+        linear-gradient(90deg, #080808 5%, rgba(8,8,8,.85) 50%, rgba(8,8,8,.3)),
+        linear-gradient(0deg, #080808, transparent 60%),
+        url("assets/images/tera-sanki-journey.jpg") center/cover no-repeat;
+      border-bottom: 1px solid #222;
+    }
+
+    .journey-hero-content {
+      padding: 110px 0;
+      max-width: 850px;
+    }
+
+    .journey-hero h1 {
+      font-size: clamp(65px, 12vw, 145px);
+      line-height: .85;
+      letter-spacing: -7px;
+      margin: 35px 0;
+      font-weight: 900;
+    }
+
+    .journey-hero h1 span {
+      display: block;
+      color: #777;
+    }
+
+    .journey-intro {
+      max-width: 570px;
+      color: #b9b9b9;
+      font-size: 17px;
+      line-height: 1.9;
+    }
+
+    .journey-quote {
+      padding: 110px 20px;
+      text-align: center;
+      border-bottom: 1px solid #222;
+    }
+
+    .journey-quote h2 {
+      font-size: clamp(27px, 5vw, 53px);
+      line-height: 1.3;
+      max-width: 850px;
+      margin: 25px auto;
+      letter-spacing: -1px;
+    }
+
+    .journey-quote h2 span {
+      color: #777;
+    }
+
+    .journey-section {
+      padding: 110px 0;
+      border-bottom: 1px solid #222;
+    }
+
+    .journey-heading {
+      font-size: clamp(35px, 6vw, 65px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin: 20px 0 30px;
+    }
+
+    .journey-text {
+      color: #aaa;
+      font-size: 16px;
+      line-height: 2;
+      max-width: 760px;
+    }
+
+    .journey-number {
+      font-size: 100px;
+      font-weight: 900;
+      color: #171717;
+      line-height: 1;
+      margin-bottom: 15px;
+    }
+
+    .journey-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 70px;
+      align-items: start;
+    }
+
+    .journey-timeline {
+      margin-top: 65px;
+      border-left: 1px solid #444;
+      padding-left: 35px;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 65px;
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      background: #eee;
+      border-radius: 50%;
+      left: -40px;
+      top: 7px;
+    }
+
+    .timeline-item h3 {
+      font-size: 25px;
+      margin: 0 0 15px;
+    }
+
+    .timeline-item p {
+      color: #999;
+      line-height: 1.9;
+      max-width: 650px;
+    }
+
+    .journey-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 45px;
+    }
+
+    .journey-card {
+      background: #111;
+      border: 1px solid #252525;
+      padding: 30px;
+      min-height: 190px;
+      transition: .3s;
+    }
+
+    .journey-card:hover {
+      background: #171717;
+      border-color: #555;
+      transform: translateY(-4px);
+    }
+
+    .journey-card small {
+      color: #777;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .journey-card h3 {
+      font-size: 24px;
+      margin: 20px 0 12px;
+    }
+
+    .journey-card p {
+      color: #999;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .journey-artist {
+      background: #101010;
+      padding: 90px 0;
+    }
+
+    .journey-artist h2 {
+      font-size: clamp(50px, 9vw, 100px);
+      line-height: .9;
+      letter-spacing: -5px;
+      margin: 25px 0;
+    }
+
+    .journey-artist h2 span {
+      color: #666;
+    }
+
+    .journey-final {
+      padding: 140px 20px;
+      text-align: center;
+      background:
+        linear-gradient(#080808b8, #080808),
+        url("assets/images/tera-sanki-journey.jpg") center/cover;
+    }
+
+    .journey-final h2 {
+      font-size: clamp(45px, 9vw, 100px);
+      letter-spacing: -4px;
+      line-height: .95;
+      margin: 30px 0;
+    }
+
+    .journey-final p {
+      color: #999;
+      letter-spacing: 3px;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    @media(max-width:700px) {
+      .journey-hero {
+        min-height: 75vh;
+        background-position: 60% center;
+      }
+
+      .journey-hero h1 {
+        letter-spacing: -3px;
+      }
+
+      .journey-section {
+        padding: 75px 0;
+      }
+
+      .journey-two-col {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .journey-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .journey-number {
+        font-size: 65px;
+      }
+
+      .journey-final h2 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a class="brand" href="index.html"><b>SANKI</b> MUSIC</a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="music.html">Music</a>
+    <a href="videos.html">Videos</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="beats.html">Sanki Beats ↗</a>
+  </nav>
+</header>
+
+<main class="journey-page">
+
+  <!-- HERO -->
+
+  <section class="journey-hero">
+    <div class="journey-container journey-hero-content">
+
+      <div class="journey-label">Sanki Music Presents / The Artist Story</div>
+
+      <h1>
+        THE
+        <span>JOURNEY.</span>
+      </h1>
+
+      <p class="journey-intro">
+        Every artist has a story. Mine was never about having everything
+        figured out. It was about holding on to one dream, facing everything
+        that came along the way, and refusing to let that dream disappear.
+      </p>
+
+      <div class="journey-label" style="margin-top:35px">
+        TERA SANKI — GURDASPUR, PUNJAB, INDIA
+      </div>
+
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+
+  <section class="journey-quote">
+    <div class="journey-label">Not Just Music</div>
+
+    <h2>
+      "It was never just about making songs.
+      <span>It was about making a name for myself.</span>"
+    </h2>
+
+    <div class="journey-label">THIS IS MY STORY</div>
+  </section>
+
+  <!-- BEGINNING -->
+
+  <section class="journey-section">
+    <div class="journey-container journey-two-col">
+
+      <div>
+        <div class="journey-number">01</div>
+        <div class="journey-label">The Beginning</div>
+        <h2 class="journey-heading">A DREAM<br>IN MY HEART.</h2>
+      </div>
+
+      <div>
+        <p class="journey-text">
+          I come from Gurdaspur, Punjab. Like many young people,
+          I had dreams of building something of my own. But for me,
+          music became more than just an interest. It became a part
+          of who I was.
+        </p>
+
+        <p class="journey-text">
+          Rap, melodies, lyrics and beats slowly became my world.
+          I wanted to create music that carried my thoughts,
+          my emotions and my identity.
+        </p>
+
+        <p class="journey-text">
+          I didn't have a perfect setup or a ready-made path.
+          I just had the passion to start, the courage to try
+          and a dream that kept getting bigger.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STRUGGLE -->
+
+  <section class="journey-section">
+    <div class="journey-container journey-two-col">
+
+      <div>
+        <div class="journey-number">02</div>
+        <div class="journey-label">The Reality</div>
+        <h2 class="journey-heading">NOT EVERYONE<br>UNDERSTOOD.</h2>
+      </div>
+
+      <div>
+        <p class="journey-text">
+          Following a dream is easy to talk about, but living it
+          is a completely different thing.
+        </p>
+
+        <p class="journey-text">
+          There were moments when I had to face questions,
+          criticism and taunts about choosing music as my career.
+          Not everyone believed in what I was trying to build.
+          The support I hoped for was not always there.
+        </p>
+
+        <p class="journey-text">
+          Sometimes, the hardest part wasn't making music.
+          It was finding the strength to continue when the people
+          around you couldn't see the future you were imagining.
+        </p>
+
+        <p class="journey-text">
+          Financial limitations, career pressure, family expectations
+          and uncertainty made the road even harder.
+          There were days when everything felt overwhelming.
+        </p>
+
+        <p class="journey-text">
+          But somewhere inside, I knew I didn't want to give up
+          on something that meant so much to me.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SOLO GRIND -->
+
+  <section class="journey-section">
+    <div class="journey-container">
+
+      <div class="journey-label">03 / The Independent Grind</div>
+
+      <h2 class="journey-heading">
+        IF NO ONE BUILDS IT,<br>
+        I WILL BUILD IT MYSELF.
+      </h2>
+
+      <p class="journey-text">
+        I started learning that being an independent artist means
+        much more than writing and singing. There is an entire world
+        behind every release that most people never get to see.
+      </p>
+
+      <p class="journey-text">
+        From lyrics and music ideas to recording, production
+        coordination, artwork, video editing, thumbnails,
+        distribution and promotion — I kept learning and
+        handling different parts of my own journey.
+      </p>
+
+      <div class="journey-card-grid">
+
+        <div class="journey-card">
+          <small>01 / Creativity</small>
+          <h3>Writing & Music</h3>
+          <p>Creating lyrics, developing ideas, experimenting with Punjabi rap, trap and melodic sounds.</p>
+        </div>
+
+        <div class="journey-card">
+          <small>02 / Development</small>
+          <h3>Learning The Craft</h3>
+          <p>Working on vocals, sound, recording and understanding how to make music better.</p>
+        </div>
+
+        <div class="journey-card">
+          <small>03 / Visual Identity</small>
+          <h3>Building The Image</h3>
+          <p>Working on cover artwork, posters, music videos, editing and the visual identity of Tera Sanki.</p>
+        </div>
+
+        <div class="journey-card">
+          <small>04 / Independence</small>
+          <h3>Doing It All</h3>
+          <p>Managing releases, distribution, social media and promotion while continuing to develop as an artist.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MUSIC JOURNEY -->
+
+  <section class="journey-section">
+    <div class="journey-container">
+
+      <div class="journey-number">04</div>
+
+      <div class="journey-label">The Music / The Releases</div>
+
+      <h2 class="journey-heading">
+        EVERY RELEASE<br>HAS A STORY.
+      </h2>
+
+      <p class="journey-text">
+        Every song became another step in understanding myself
+        as an artist. Each release brought new experiences,
+        new challenges and new lessons.
+      </p>
+
+      <div class="journey-timeline">
+
+        <div class="timeline-item">
+          <h3>NO MERCY</h3>
+          <p>
+            One of the important chapters in my independent music journey.
+            From creating the song to working on its visual presentation,
+            every part was another learning experience.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <h3>PYAAR KUDE</h3>
+          <p>
+            A different side of my musical identity.
+            Released on 7 August 2026, this track represented
+            another step in exploring my sound.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <h3>UNPREDICTABLE</h3>
+          <p>
+            Released on 1 September 2026.
+            Another independent release, another experience,
+            and another step forward.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <h3>BATI BORE</h3>
+          <p>
+            A track built around a bold Punjabi hip-hop identity,
+            carrying an aggressive energy and a sound that reflects
+            another dimension of Tera Sanki.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- IDENTITY -->
+
+  <section class="journey-artist">
+    <div class="journey-container">
+
+      <div class="journey-label">05 / More Than A Name</div>
+
+      <h2>
+        TERA<br>
+        <span>SANKI.</span>
+      </h2>
+
+      <p class="journey-text">
+        I don't want to be known only by a stage name.
+        I want people to recognise the music, the lyrics,
+        the voice and the identity behind it.
+      </p>
+
+      <p class="journey-text">
+        I take inspiration from artists who created their own
+        identity and stayed true to their sound. But my goal
+        is to create my own path, my own style and my own legacy.
+      </p>
+
+      <p class="journey-text">
+        I believe real recognition should come from the music,
+        not artificial numbers or temporary popularity.
+      </p>
+
+      <div class="journey-label" style="margin-top:45px">
+        Independent Artist / Rapper / Singer / Lyricist
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VISION -->
+
+  <section class="journey-section">
+    <div class="journey-container journey-two-col">
+
+      <div>
+        <div class="journey-number">06</div>
+        <div class="journey-label">The Vision</div>
+        <h2 class="journey-heading">
+          THIS IS<br>ONLY THE START.
+        </h2>
+      </div>
+
+      <div>
+        <p class="journey-text">
+          I know I still have a long way to go.
+          There are bigger stages to reach, better music to create,
+          more stories to tell and countless things to learn.
+        </p>
+
+        <p class="journey-text">
+          I don't expect everything to happen overnight.
+          I want to grow step by step, improve my craft,
+          build a genuine audience and create music
+          that people can connect with.
+        </p>
+
+        <p class="journey-text">
+          The journey is not perfect. The future is uncertain.
+          But the dream is still alive.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- END -->
+
+  <section class="journey-final">
+
+    <div class="journey-label">Sanki Music / Tera Sanki</div>
+
+    <h2>
+      THE STORY<br>
+      IS STILL<br>
+      BEING WRITTEN.
+    </h2>
+
+    <p>NO SHORTCUTS. NO STOPPING. JUST THE JOURNEY.</p>
+
+    <div class="journey-label" style="margin-top:45px">
+      GURDASPUR, PUNJAB, INDIA
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 SANKI MUSIC</span>
+  <span>Gurdaspur, Punjab, India</span>
+</footer>
+
+</body>
+</html>
