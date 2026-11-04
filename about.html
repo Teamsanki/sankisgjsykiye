@@ -1,1 +1,552 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ABOUT TERA SANKI — Tera Sanki</title><link rel="icon" href="assets/icons/favicon.svg"><link rel="stylesheet" href="css/style.css"><script src="config.js" defer></script><script src="js/site.js" defer></script></head><body><header class="header"><a class="brand" href="index.html"><b>SANKI</b> MUSIC</a><nav><a href="index.html">Home</a><a href="music.html">Music</a><a href="videos.html">Videos</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="beats.html">Sanki Beats ↗</a></nav></header><main><section class="hero"><div class="container"><div class="eyebrow">Sanki Music / Tera Sanki</div><h1 class="display">ABOUT TERA SANKI</h1><p class="sub">Punjabi rapper, singer and lyricist from Gurdaspur.</p></div></section></main><footer class="footer"><span>© 2026 SANKI MUSIC</span><span>Gurdaspur, Punjab, India</span></footer></body></html>
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>ABOUT TERA SANKI — Official Artist Biography | Sanki Music</title>
+
+  <meta name="description" content="Discover Tera Sanki, a Punjabi rapper, singer and lyricist from Gurdaspur, Punjab, blending Punjabi hip-hop, trap and melodic sounds into his own musical identity.">
+
+  <link rel="icon" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="config.js" defer></script>
+  <script src="js/site.js" defer></script>
+
+  <style>
+    .about-page {
+      background: #080808;
+      color: #f5f5f5;
+      overflow: hidden;
+    }
+
+    .about-container {
+      width: min(1120px, 90%);
+      margin: auto;
+    }
+
+    .about-label {
+      font-size: 11px;
+      color: #999;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .about-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background:
+        linear-gradient(90deg, #080808 5%, rgba(8,8,8,.85) 55%, rgba(8,8,8,.2)),
+        linear-gradient(0deg, #080808, transparent 60%),
+        url("assets/images/tera-sanki-about.jpg") center/cover no-repeat;
+      border-bottom: 1px solid #222;
+    }
+
+    .about-hero-content {
+      padding: 100px 0;
+      max-width: 850px;
+    }
+
+    .about-hero h1 {
+      font-size: clamp(65px, 12vw, 140px);
+      line-height: .86;
+      letter-spacing: -7px;
+      margin: 35px 0;
+      font-weight: 900;
+    }
+
+    .about-hero h1 span {
+      display: block;
+      color: #777;
+    }
+
+    .about-subtitle {
+      color: #bbb;
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 600px;
+    }
+
+    .about-section {
+      padding: 110px 0;
+      border-bottom: 1px solid #222;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 75px;
+      align-items: start;
+    }
+
+    .about-heading {
+      font-size: clamp(38px, 6vw, 65px);
+      line-height: 1;
+      letter-spacing: -3px;
+      margin: 25px 0;
+    }
+
+    .about-text {
+      color: #aaa;
+      font-size: 16px;
+      line-height: 2;
+      margin-bottom: 22px;
+    }
+
+    .about-highlight {
+      padding: 100px 20px;
+      text-align: center;
+      background: #101010;
+      border-bottom: 1px solid #222;
+    }
+
+    .about-highlight h2 {
+      font-size: clamp(30px, 5vw, 55px);
+      line-height: 1.3;
+      max-width: 850px;
+      margin: 30px auto;
+      letter-spacing: -1px;
+    }
+
+    .about-highlight h2 span {
+      color: #777;
+    }
+
+    .about-genre-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 50px;
+    }
+
+    .about-genre {
+      padding: 35px 25px;
+      background: #111;
+      border: 1px solid #252525;
+      transition: .3s;
+    }
+
+    .about-genre:hover {
+      border-color: #777;
+      transform: translateY(-5px);
+    }
+
+    .about-genre h3 {
+      font-size: 23px;
+      margin-bottom: 15px;
+    }
+
+    .about-genre p {
+      color: #999;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .about-identity {
+      background: #0d0d0d;
+      padding: 110px 0;
+    }
+
+    .about-identity h2 {
+      font-size: clamp(65px, 12vw, 135px);
+      line-height: .85;
+      letter-spacing: -7px;
+      margin: 30px 0;
+    }
+
+    .about-identity h2 span {
+      color: #666;
+    }
+
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid #292929;
+      margin-top: 60px;
+    }
+
+    .about-fact {
+      padding: 30px;
+      border-right: 1px solid #292929;
+    }
+
+    .about-fact:last-child {
+      border-right: none;
+    }
+
+    .about-fact small {
+      display: block;
+      color: #777;
+      letter-spacing: 2px;
+      font-size: 10px;
+      margin-bottom: 15px;
+    }
+
+    .about-fact strong {
+      font-size: 19px;
+    }
+
+    .about-closing {
+      padding: 130px 20px;
+      text-align: center;
+    }
+
+    .about-closing h2 {
+      font-size: clamp(45px, 9vw, 100px);
+      line-height: .95;
+      letter-spacing: -5px;
+      margin: 30px 0;
+    }
+
+    .about-closing p {
+      color: #999;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    @media(max-width:700px) {
+      .about-hero {
+        min-height: 70vh;
+        background-position: 60% center;
+      }
+
+      .about-hero h1 {
+        letter-spacing: -3px;
+      }
+
+      .about-section,
+      .about-identity {
+        padding: 75px 0;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .about-genre-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-facts {
+        grid-template-columns: 1fr;
+      }
+
+      .about-fact {
+        border-right: none;
+        border-bottom: 1px solid #292929;
+      }
+
+      .about-fact:last-child {
+        border-bottom: none;
+      }
+
+      .about-identity h2 {
+        letter-spacing: -3px;
+      }
+
+      .about-closing h2 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <a class="brand" href="index.html"><b>SANKI</b> MUSIC</a>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="music.html">Music</a>
+    <a href="videos.html">Videos</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="about.html">About</a>
+    <a href="beats.html">Sanki Beats ↗</a>
+  </nav>
+</header>
+
+<main class="about-page">
+
+  <!-- HERO -->
+
+  <section class="about-hero">
+    <div class="about-container about-hero-content">
+
+      <div class="about-label">
+        Official Artist Profile / Sanki Music
+      </div>
+
+      <h1>
+        TERA
+        <span>SANKI.</span>
+      </h1>
+
+      <p class="about-subtitle">
+        Punjabi Rapper. Singer. Lyricist.
+        A new-age musical voice bringing together
+        Punjabi hip-hop, trap and melodic expression.
+      </p>
+
+      <div class="about-label" style="margin-top:35px">
+        GURDASPUR, PUNJAB, INDIA
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BIOGRAPHY -->
+
+  <section class="about-section">
+    <div class="about-container about-grid">
+
+      <div>
+        <div class="about-label">01 / The Artist</div>
+
+        <h2 class="about-heading">
+          MUSIC IS<br>MY IDENTITY.
+        </h2>
+      </div>
+
+      <div>
+
+        <p class="about-text">
+          Tera Sanki is an Indian Punjabi rapper, singer and lyricist
+          from Gurdaspur, Punjab, known for exploring the evolving
+          sounds of Punjabi hip-hop and contemporary trap music.
+        </p>
+
+        <p class="about-text">
+          With an artistic direction shaped by rap, melody,
+          rhythm and lyrical expression, he aims to create music
+          that connects with listeners while representing his
+          own personality and creative vision.
+        </p>
+
+        <p class="about-text">
+          His musical approach moves between hard-hitting Punjabi
+          rap, melodic vocals and expressive hip-hop sounds.
+          Rather than limiting himself to one style, he continues
+          to experiment and develop a versatile musical identity.
+        </p>
+
+        <p class="about-text">
+          As an independent artist, Tera Sanki is focused on
+          building his presence through original music,
+          consistent creativity and a long-term vision
+          for his career.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MUSIC IDENTITY -->
+
+  <section class="about-highlight">
+
+    <div class="about-label">02 / Musical Identity</div>
+
+    <h2>
+      ROOTED IN PUNJABI CULTURE.
+      <span>INSPIRED BY GLOBAL HIP-HOP.</span>
+    </h2>
+
+    <p class="about-text" style="margin:auto;max-width:650px">
+      A sound shaped by Punjabi expression, modern hip-hop
+      influences, powerful rhythms and melodic storytelling.
+    </p>
+
+  </section>
+
+  <!-- GENRES -->
+
+  <section class="about-section">
+    <div class="about-container">
+
+      <div class="about-label">03 / The Sound</div>
+
+      <h2 class="about-heading">
+        DIFFERENT SOUNDS.<br>
+        ONE IDENTITY.
+      </h2>
+
+      <div class="about-genre-grid">
+
+        <div class="about-genre">
+          <h3>Punjabi Hip-Hop</h3>
+          <p>
+            Strong Punjabi expression, rhythmic delivery
+            and contemporary hip-hop influences.
+          </p>
+        </div>
+
+        <div class="about-genre">
+          <h3>Trap</h3>
+          <p>
+            Modern production, heavy beats, energetic flows
+            and a bold musical atmosphere.
+          </p>
+        </div>
+
+        <div class="about-genre">
+          <h3>Melodic Rap</h3>
+          <p>
+            Blending rap with melodic vocals, emotions
+            and expressive musical arrangements.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CREATIVE VISION -->
+
+  <section class="about-section">
+    <div class="about-container about-grid">
+
+      <div>
+        <div class="about-label">04 / Creative Vision</div>
+
+        <h2 class="about-heading">
+          ALWAYS<br>EVOLVING.
+        </h2>
+      </div>
+
+      <div>
+
+        <p class="about-text">
+          For Tera Sanki, music is an opportunity to express
+          individuality, explore new sounds and create something
+          that feels authentic.
+        </p>
+
+        <p class="about-text">
+          His creative vision goes beyond individual songs.
+          It is about developing a recognisable sound,
+          a strong visual identity and a connection with
+          audiences through music.
+        </p>
+
+        <p class="about-text">
+          With every new release, he aims to push his creativity
+          further, explore different musical directions
+          and take another step towards his bigger goals.
+        </p>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SANKI MUSIC -->
+
+  <section class="about-identity">
+    <div class="about-container">
+
+      <div class="about-label">05 / The Brand Behind The Artist</div>
+
+      <h2>
+        SANKI<br>
+        <span>MUSIC.</span>
+      </h2>
+
+      <p class="about-text" style="max-width:650px">
+        Sanki Music represents the creative vision and musical
+        identity associated with Tera Sanki. It is a platform
+        for developing original sounds, presenting music
+        and building a distinctive artistic presence.
+      </p>
+
+      <p class="about-text" style="max-width:650px">
+        Built around creativity, independence and continuous
+        musical growth, Sanki Music is an important part
+        of the vision for the future.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ARTIST DETAILS -->
+
+  <section class="about-section">
+    <div class="about-container">
+
+      <div class="about-label">06 / Artist Details</div>
+
+      <h2 class="about-heading">
+        GET TO KNOW<br>THE ARTIST.
+      </h2>
+
+      <div class="about-facts">
+
+        <div class="about-fact">
+          <small>ARTIST NAME</small>
+          <strong>Tera Sanki</strong>
+        </div>
+
+        <div class="about-fact">
+          <small>PROFESSION</small>
+          <strong>Rapper / Singer / Lyricist</strong>
+        </div>
+
+        <div class="about-fact">
+          <small>HOMETOWN</small>
+          <strong>Gurdaspur, Punjab, India</strong>
+        </div>
+
+        <div class="about-fact">
+          <small>MUSICAL GENRE</small>
+          <strong>Punjabi Hip-Hop / Trap</strong>
+        </div>
+
+        <div class="about-fact">
+          <small>MUSIC BRAND</small>
+          <strong>Sanki Music</strong>
+        </div>
+
+        <div class="about-fact">
+          <small>ARTISTIC DIRECTION</small>
+          <strong>Modern Punjabi Music</strong>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+
+  <section class="about-closing">
+
+    <div class="about-label">The Future Is Music</div>
+
+    <h2>
+      BUILT ON<br>
+      MUSIC.<br>
+      DRIVEN BY<br>
+      VISION.
+    </h2>
+
+    <p>TERA SANKI / SANKI MUSIC</p>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 SANKI MUSIC</span>
+  <span>Gurdaspur, Punjab, India</span>
+</footer>
+
+</body>
+</html>
