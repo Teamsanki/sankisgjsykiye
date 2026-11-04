@@ -1,1038 +1,197 @@
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  /* =====================================
+     INTRO VIDEO ENGINE
+  ===================================== */
 
-  <title>TERA SANKI — Official Website</title>
-  <meta name="description" content="Official website of Tera Sanki — Punjabi Rapper, Singer and Lyricist from Gurdaspur, Punjab.">
+  const introScreen = document.getElementById("introScreen");
+  const introVideo = document.getElementById("introVideo");
+  const enterSite = document.getElementById("enterSite");
 
-  <link rel="icon" href="assets/icons/favicon.svg">
-  <link rel="stylesheet" href="css/style.css">
+  // IMPORTANT: YAHAN APNI ACTUAL INTRO VIDEO KA NAAM LIKHNA
+  const introVideoPath = "assets/videos/intro.mp4";
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  let introFinished = false;
 
-    html {
-      scroll-behavior: smooth;
-      background: #050505;
-    }
+  function finishIntro() {
+    if (introFinished) return;
 
-    body {
-      margin: 0;
-      background: #050505;
-      color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
-      overflow-x: hidden;
-    }
+    introFinished = true;
 
-    body.intro-playing {
-      overflow: hidden;
-    }
+    introScreen.classList.add("finished");
+    document.body.classList.remove("intro-playing");
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    setTimeout(() => {
+      introScreen.remove();
+    }, 1600);
+  }
 
-    /* INTRO VIDEO */
+  if (introVideo && introScreen) {
 
-    .intro-screen {
-      position: fixed;
-      inset: 0;
-      z-index: 100000;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 1.5s ease, visibility 1.5s ease;
-    }
-
-    .intro-screen video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .intro-screen.finished {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* BACKGROUND VIDEO */
-
-    .cinematic-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background: #000;
-      overflow: hidden;
-    }
-
-    .cinematic-bg video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1.8s ease;
-    }
-
-    .cinematic-bg video.active {
-      opacity: 1;
-    }
-
-    .cinematic-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,.48), rgba(0,0,0,.3) 45%, #050505 100%),
-        linear-gradient(to right, rgba(0,0,0,.55), transparent);
-    }
-
-    /* HEADER */
-
-    .header {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      padding: 25px 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-      background: linear-gradient(to bottom, rgba(0,0,0,.65), transparent);
-    }
-
-    .brand {
-      font-size: 17px;
-      letter-spacing: 3px;
-      font-weight: 400;
-      white-space: nowrap;
-    }
-
-    .brand b {
-      font-weight: 900;
-    }
-
-    .header nav {
-      display: flex;
-      gap: 27px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .header nav a {
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #ddd;
-      transition: .3s;
-    }
-
-    .header nav a:hover {
-      color: #fff;
-      opacity: .65;
-    }
-
-    /* PAGE CONTENT */
-
-    main {
-      position: relative;
-      z-index: 2;
-    }
-
-    .container {
-      width: min(1180px, 88%);
-      margin: auto;
-    }
-
-    .section {
-      position: relative;
-      min-height: 75vh;
-      padding: 120px 0;
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,.09);
-    }
-
-    .eyebrow {
-      color: #aaa;
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 22px;
-    }
-
-    .display {
-      font-size: clamp(65px, 12vw, 155px);
-      font-weight: 900;
-      line-height: .85;
-      letter-spacing: -7px;
-      margin: 0 0 30px;
-      text-transform: uppercase;
-    }
-
-    .outline {
-      color: transparent;
-      -webkit-text-stroke: 1px #fff;
-    }
-
-    .sub {
-      max-width: 550px;
-      color: #ccc;
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .btn {
-      display: inline-block;
-      margin: 20px 10px 0 0;
-      padding: 15px 23px;
-      border: 1px solid rgba(255,255,255,.6);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: .3s;
-    }
-
-    .btn:hover {
-      background: #fff;
-      color: #000;
-    }
-
-    .btn.primary {
-      background: #fff;
-      color: #000;
-    }
-
-    .btn.primary:hover {
-      background: transparent;
-      color: #fff;
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: 88vh;
-      display: flex;
-      align-items: center;
-      padding: 80px 0 130px;
-    }
-
-    .hero .container {
-      width: min(1180px, 88%);
-    }
-
-    .hero .sub {
-      margin-top: 30px;
-    }
-
-    /* INTRO TEXT */
-
-    .intro-copy {
-      max-width: 850px;
-    }
-
-    .intro-copy h2 {
-      font-size: clamp(35px, 6vw, 75px);
-      line-height: 1.05;
-      text-transform: uppercase;
-      margin: 0 0 25px;
-    }
-
-    .intro-copy p {
-      color: #aaa;
-      max-width: 680px;
-      font-size: 16px;
-      line-height: 1.9;
-    }
-
-    /* TIMELINE */
-
-    .timeline {
-      width: 100%;
-      max-width: 850px;
-      border-left: 1px solid rgba(255,255,255,.35);
-      padding-left: 35px;
-    }
-
-    .timeline-item {
-      position: relative;
-      margin-bottom: 55px;
-    }
-
-    .timeline-item::before {
-      content: "";
-      position: absolute;
-      left: -41px;
-      top: 5px;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: #fff;
-    }
-
-    .timeline-item .year {
-      color: #777;
-      font-size: 11px;
-      letter-spacing: 3px;
-      margin-bottom: 12px;
-    }
-
-    .timeline-item h3 {
-      font-size: clamp(25px, 4vw, 42px);
-      margin: 0 0 12px;
-      text-transform: uppercase;
-    }
-
-    .timeline-item p {
-      color: #aaa;
-      line-height: 1.8;
-      max-width: 650px;
-      margin: 0;
-    }
-
-    /* RELEASES */
-
-    .section-heading {
-      font-size: clamp(45px, 8vw, 95px);
-      text-transform: uppercase;
-      letter-spacing: -4px;
-      margin: 0 0 45px;
-    }
-
-    .release-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-
-    .release-card {
-      min-height: 230px;
-      padding: 35px;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.3);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      transition: .4s;
-    }
-
-    .release-card:hover {
-      background: rgba(255,255,255,.08);
-      transform: translateY(-5px);
-    }
-
-    .release-card span {
-      color: #999;
-      font-size: 10px;
-      letter-spacing: 3px;
-      margin-bottom: 12px;
-    }
-
-    .release-card h3 {
-      font-size: clamp(25px, 4vw, 43px);
-      text-transform: uppercase;
-      margin: 0;
-    }
-
-    .release-card p {
-      color: #aaa;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    /* VISUAL WORLD */
-
-    .visual-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
-
-    .visual-card {
-      min-height: 270px;
-      padding: 30px;
-      display: flex;
-      align-items: flex-end;
-      border: 1px solid rgba(255,255,255,.2);
-      background:
-        linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.05));
-      transition: .4s;
-    }
-
-    .visual-card:hover {
-      transform: scale(1.015);
-      border-color: #fff;
-    }
-
-    .visual-card h3 {
-      font-size: 32px;
-      text-transform: uppercase;
-      margin: 0 0 10px;
-    }
-
-    .visual-card p {
-      color: #bbb;
-      font-size: 13px;
-    }
-
-    /* BEATS */
-
-    .beats-panel {
-      width: 100%;
-      padding: 65px;
-      border: 1px solid rgba(255,255,255,.25);
-      background: rgba(0,0,0,.45);
-    }
-
-    .beats-panel h2 {
-      font-size: clamp(45px, 8vw, 95px);
-      line-height: .95;
-      text-transform: uppercase;
-      margin: 0 0 25px;
-    }
-
-    .beats-panel p {
-      color: #bbb;
-      max-width: 600px;
-      line-height: 1.8;
-    }
-
-    /* ABOUT */
-
-    .about-layout {
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .about-layout h2 {
-      font-size: clamp(45px, 7vw, 85px);
-      line-height: .95;
-      text-transform: uppercase;
-      margin: 0 0 25px;
-    }
-
-    .about-layout p {
-      color: #aaa;
-      line-height: 1.9;
-    }
-
-    .about-side {
-      border: 1px solid rgba(255,255,255,.2);
-      padding: 35px;
-    }
-
-    .about-side div {
-      padding: 17px 0;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      font-size: 12px;
-    }
-
-    .about-side div:last-child {
-      border-bottom: 0;
-    }
-
-    .about-side span:first-child {
-      color: #777;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* FINAL SECTION */
-
-    .final-section {
-      min-height: 75vh;
-      text-align: center;
-      justify-content: center;
-    }
-
-    .final-section h2 {
-      font-size: clamp(55px, 10vw, 120px);
-      line-height: .9;
-      text-transform: uppercase;
-      margin: 0 0 25px;
-    }
-
-    .final-section p {
-      color: #aaa;
-    }
-
-    /* FOOTER */
-
-    .footer {
-      position: relative;
-      z-index: 2;
-      padding: 30px 6%;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      color: #777;
-      font-size: 10px;
-      letter-spacing: 2px;
-      border-top: 1px solid rgba(255,255,255,.1);
-    }
-
-    /* SCROLL REVEAL */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(55px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* SCROLL PROGRESS */
-
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      height: 3px;
-      background: #fff;
-      z-index: 100001;
-    }
-
-    /* MOBILE */
-
-    @media(max-width: 750px) {
-      .header {
-        padding: 20px 5%;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .header nav {
-        gap: 15px;
-      }
-
-      .header nav a {
-        font-size: 9px;
-      }
-
-      .display {
-        letter-spacing: -4px;
-      }
-
-      .section {
-        min-height: auto;
-        padding: 90px 0;
-      }
-
-      .hero {
-        min-height: 80vh;
-      }
-
-      .release-grid,
-      .visual-grid,
-      .about-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .beats-panel {
-        padding: 30px;
-      }
-
-      .about-layout {
-        gap: 30px;
-      }
-
-      .footer {
-        flex-direction: column;
-      }
-    }
-
-    @media(prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-    }
-  </style>
-</head>
-
-<body class="intro-playing">
-
-  <div class="scroll-progress" id="scrollProgress"></div>
-
-  <!-- INTRO VIDEO: PLAYS FIRST -->
-
-  <div class="intro-screen" id="introScreen">
-    <video
-      id="introVideo"
-      autoplay
-      muted
-      playsinline
-      preload="auto">
-    </video>
-  </div>
-
-  <!-- CINEMATIC BACKGROUND VIDEOS -->
-
-  <div class="cinematic-bg">
-    <video id="bgVideo1" class="active" muted playsinline preload="auto"></video>
-    <video id="bgVideo2" muted playsinline preload="auto"></video>
-    <div class="cinematic-overlay"></div>
-  </div>
-
-  <!-- HEADER -->
-
-  <header class="header">
-    <a class="brand" href="index.html"><b>SANKI</b> MUSIC</a>
-
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="music.html">Music</a>
-      <a href="videos.html">Videos</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="about.html">About</a>
-      <a href="beats.html">Sanki Beats ↗</a>
-    </nav>
-  </header>
-
-  <main>
-
-    <!-- HERO -->
-
-    <section class="hero">
-      <div class="container">
-        <div class="eyebrow">Sanki Music / Gurdaspur, Punjab</div>
-
-        <h1 class="display">
-          TERA<br>
-          <span class="outline">SANKI.</span>
-        </h1>
-
-        <p class="sub">
-          Punjabi Rapper · Singer · Lyricist.
-          Independent sound. Real stories. No limits.
-        </p>
-
-        <a class="btn primary" href="music.html">Explore Music ↗</a>
-        <a class="btn" href="beats.html">Discover Sanki Beats ↗</a>
-      </div>
-    </section>
-
-    <!-- ARTIST INTRO -->
-
-    <section class="section">
-      <div class="container reveal">
-        <div class="intro-copy">
-          <div class="eyebrow">01 / The Artist</div>
-
-          <h2>
-            Not Just Music.<br>
-            It's A Journey.
-          </h2>
-
-          <p>
-            Tera Sanki is an independent Punjabi rapper, singer and lyricist
-            from Gurdaspur, Punjab. Building his own identity through music,
-            visuals and storytelling.
-          </p>
-
-          <p>
-            From writing lyrics to recording vocals and shaping the visual
-            world around every release, the journey is built independently.
-            Every track represents a different chapter.
-          </p>
-
-          <a class="btn" href="about.html">More About Me ↗</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- JOURNEY -->
-
-    <section class="section">
-      <div class="container reveal">
-        <div class="eyebrow">02 / The Journey</div>
-        <h2 class="section-heading">My Story.</h2>
-
-        <div class="timeline">
-
-          <div class="timeline-item">
-            <div class="year">THE BEGINNING</div>
-            <h3>Finding My Sound</h3>
-            <p>
-              Started exploring music, writing lyrics and developing a
-              personal sound through Punjabi hip-hop and trap.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="year">A NEW CHAPTER</div>
-            <h3>NO MERCY</h3>
-            <p>
-              One of the important chapters in the independent music journey.
-              From creating the song to working on its visual presentation,
-              every part was a learning experience.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="year">7 AUGUST</div>
-            <h3>PYAAR KUDE</h3>
-            <p>
-              A different emotional side of the artist, bringing melody
-              and storytelling into the sound.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="year">1 SEPTEMBER</div>
-            <h3>UNPREDICTABLE</h3>
-            <p>
-              Another independent release, continuing to explore
-              a distinct musical identity.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="year">OCTOBER 2026</div>
-            <h3>BATI BORE</h3>
-            <p>
-              A hard-hitting Punjabi track with an aggressive energy,
-              representing another step in the journey.
-            </p>
-          </div>
-
-          <div class="timeline-item">
-            <div class="year">THE NEXT CHAPTER</div>
-            <h3>More To Come.</h3>
-            <p>
-              New music, new visuals and new stories.
-              The journey is still in progress.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- MUSIC -->
-
-    <section class="section">
-      <div class="container reveal">
-        <div class="eyebrow">03 / Discography</div>
-        <h2 class="section-heading">The Music.</h2>
-
-        <div class="release-grid">
-
-          <a class="release-card" href="music.html">
-            <span>OFFICIAL RELEASE</span>
-            <h3>NO MERCY</h3>
-            <p>An important chapter of the independent journey.</p>
-          </a>
-
-          <a class="release-card" href="music.html">
-            <span>7 AUGUST</span>
-            <h3>PYAAR KUDE</h3>
-            <p>Melody, emotions and storytelling.</p>
-          </a>
-
-          <a class="release-card" href="music.html">
-            <span>1 SEPTEMBER</span>
-            <h3>UNPREDICTABLE</h3>
-            <p>A different sound and a new chapter.</p>
-          </a>
-
-          <a class="release-card" href="music.html">
-            <span>OCTOBER 2026</span>
-            <h3>BATI BORE</h3>
-            <p>Aggressive Punjabi energy.</p>
-          </a>
-
-        </div>
-
-        <a class="btn" href="music.html">View All Music ↗</a>
-      </div>
-    </section>
-
-    <!-- VISUAL WORLD -->
-
-    <section class="section">
-      <div class="container reveal">
-        <div class="eyebrow">04 / Beyond The Music</div>
-        <h2 class="section-heading">Visual World.</h2>
-
-        <div class="visual-grid">
-
-          <a class="visual-card" href="gallery.html">
-            <div>
-              <h3>Gallery</h3>
-              <p>Frames, moments and memories.</p>
-            </div>
-          </a>
-
-          <a class="visual-card" href="videos.html">
-            <div>
-              <h3>Videos</h3>
-              <p>Official music videos and visual stories.</p>
-            </div>
-          </a>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- SANKI BEATS -->
-
-    <section class="section">
-      <div class="container reveal">
-        <div class="beats-panel">
-          <div class="eyebrow">05 / Production & Sound</div>
-
-          <h2>SANKI<br>BEATS.</h2>
-
-          <p>
-            Explore the sound of Sanki Beats.
-            Discover beats and production projects built around
-            Punjabi hip-hop, trap and modern sounds.
-          </p>
-
-          <a class="btn primary" href="beats.html">Explore Sanki Beats ↗</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-
-    <section class="section">
-      <div class="container reveal">
-        <div class="about-layout">
-
-          <div>
-            <div class="eyebrow">06 / About</div>
-
-            <h2>Independent.<br>Unfiltered.</h2>
-
-            <p>
-              Tera Sanki is building an independent musical identity
-              from Gurdaspur, Punjab. A journey driven by lyrics,
-              vocals, creativity and a passion for music.
-            </p>
-
-            <p>
-              The goal is simple: create original music, build a
-              genuine audience and keep moving forward.
-            </p>
-
-            <a class="btn" href="about.html">Read More ↗</a>
-          </div>
-
-          <div class="about-side">
-            <div>
-              <span>Artist</span>
-              <strong>Tera Sanki</strong>
-            </div>
-
-            <div>
-              <span>Based In</span>
-              <strong>Gurdaspur, Punjab</strong>
-            </div>
-
-            <div>
-              <span>Genre</span>
-              <strong>Punjabi Hip-Hop / Trap</strong>
-            </div>
-
-            <div>
-              <span>Label</span>
-              <strong>Sanki Music</strong>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- FINAL -->
-
-    <section class="section final-section">
-      <div class="container reveal">
-        <div class="eyebrow">The Journey Continues</div>
-
-        <h2>
-          THIS IS<br>
-          <span class="outline">SANKI.</span>
-        </h2>
-
-        <p>Stay connected. More music coming soon.</p>
-
-        <a class="btn primary" href="https://www.youtube.com/@terasanki" target="_blank" rel="noopener">
-          YouTube ↗
-        </a>
-
-        <a class="btn" href="https://www.instagram.com/terasanki/" target="_blank" rel="noopener">
-          Instagram ↗
-        </a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <span>© 2026 SANKI MUSIC</span>
-    <span>GURDASPUR, PUNJAB, INDIA</span>
-  </footer>
-
-  <script src="config.js" defer></script>
-  <script src="js/site.js" defer></script>
-
-  <script>
-    /* =====================================
-       INTRO VIDEO ENGINE
-    ===================================== */
-
-    const introScreen = document.getElementById("introScreen");
-    const introVideo = document.getElementById("introVideo");
-
-    // INTRO VIDEO PATH — CHANGE THIS IF NEEDED
-    const introVideoPath = "assets/videos/intro.mp4";
-
-    let introFinished = false;
-
-    function finishIntro() {
-      if (introFinished) return;
-
-      introFinished = true;
-
-      introScreen.classList.add("finished");
-      document.body.classList.remove("intro-playing");
-
-      setTimeout(() => {
-        introScreen.remove();
-      }, 1600);
-    }
+    introVideo.muted = true;
+    introVideo.autoplay = true;
+    introVideo.playsInline = true;
 
     introVideo.src = introVideoPath;
 
     introVideo.addEventListener("ended", finishIntro, { once: true });
-    introVideo.addEventListener("error", finishIntro, { once: true });
 
-    introVideo.play().catch(() => {
-      // If autoplay is blocked, don't leave the visitor stuck.
+    introVideo.addEventListener("error", () => {
+      console.error("Intro video not found:", introVideoPath);
       finishIntro();
-    });
+    }, { once: true });
 
+    // Safety fallback if video never loads
+    const introTimeout = setTimeout(() => {
+      console.warn("Intro video loading timeout");
+      finishIntro();
+    }, 20000);
 
-    /* =====================================
-       BACKGROUND VIDEO ENGINE
-    ===================================== */
+    introVideo.addEventListener("ended", () => {
+      clearTimeout(introTimeout);
+    }, { once: true });
 
-    const backgroundVideos = [
-      "assets/videos/IMG_7999_20261017132345.mp4"
+    introVideo.load();
 
-      // Add more videos here:
-      // "assets/videos/video2.mp4",
-      // "assets/videos/video3.mp4",
-      // "assets/videos/video4.mp4"
-    ];
+    introVideo.play().catch(error => {
+      console.warn("Autoplay blocked:", error);
 
-    const bgVideo1 = document.getElementById("bgVideo1");
-    const bgVideo2 = document.getElementById("bgVideo2");
+      enterSite.style.display = "block";
 
-    let currentIndex = 0;
-    let activeVideo = bgVideo1;
-    let nextVideo = bgVideo2;
-    let switching = false;
-
-    function startBackground() {
-      if (!backgroundVideos.length) return;
-
-      activeVideo.src = backgroundVideos[currentIndex];
-      activeVideo.load();
-
-      activeVideo.addEventListener("canplay", () => {
-        activeVideo.classList.add("active");
-        activeVideo.play().catch(() => {});
+      enterSite.addEventListener("click", () => {
+        introVideo.play().then(() => {
+          enterSite.style.display = "none";
+        }).catch(() => {
+          finishIntro();
+        });
       }, { once: true });
+    });
+  }
+
+
+  /* =====================================
+     BACKGROUND VIDEO ENGINE
+  ===================================== */
+
+  const backgroundVideos = [
+    "assets/videos/IMG_7999_20261017132345.mp4"
+
+    // Add more videos here:
+    // "assets/videos/video2.mp4",
+    // "assets/videos/video3.mp4"
+  ];
+
+  const bgVideo1 = document.getElementById("bgVideo1");
+  const bgVideo2 = document.getElementById("bgVideo2");
+
+  let currentIndex = 0;
+  let activeVideo = bgVideo1;
+  let nextVideo = bgVideo2;
+  let switching = false;
+
+  function startBackground() {
+
+    if (!backgroundVideos.length || !activeVideo) return;
+
+    const firstVideo = backgroundVideos[0];
+
+    activeVideo.src = firstVideo;
+    activeVideo.muted = true;
+    activeVideo.playsInline = true;
+
+    // One video: simply loop it
+    if (backgroundVideos.length === 1) {
+      activeVideo.loop = true;
     }
 
-    function switchBackground() {
-      if (switching || backgroundVideos.length === 0) return;
+    activeVideo.addEventListener("canplay", () => {
+      activeVideo.classList.add("active");
+      activeVideo.play().catch(error => {
+        console.warn("Background autoplay blocked:", error);
+      });
+    }, { once: true });
 
-      switching = true;
+    activeVideo.load();
+  }
 
-      currentIndex = (currentIndex + 1) % backgroundVideos.length;
+  function switchBackground() {
 
-      nextVideo.src = backgroundVideos[currentIndex];
-      nextVideo.load();
+    if (
+      switching ||
+      backgroundVideos.length < 2
+    ) return;
 
-      nextVideo.addEventListener("canplay", function handleReady() {
-        nextVideo.removeEventListener("canplay", handleReady);
+    switching = true;
 
-        nextVideo.currentTime = 0;
-        nextVideo.play().catch(() => {});
+    currentIndex = (currentIndex + 1) % backgroundVideos.length;
 
-        nextVideo.classList.add("active");
-        activeVideo.classList.remove("active");
+    const incomingVideo = nextVideo;
+    const outgoingVideo = activeVideo;
 
-        setTimeout(() => {
-          activeVideo.pause();
-          activeVideo.removeAttribute("src");
-          activeVideo.load();
+    incomingVideo.src = backgroundVideos[currentIndex];
+    incomingVideo.muted = true;
+    incomingVideo.playsInline = true;
+    incomingVideo.loop = false;
 
-          const oldVideo = activeVideo;
-          activeVideo = nextVideo;
-          nextVideo = oldVideo;
+    incomingVideo.load();
 
-          switching = false;
-        }, 1900);
-      }, { once: true });
-    }
+    incomingVideo.addEventListener("canplay", function handleReady() {
 
-    bgVideo1.addEventListener("ended", switchBackground);
-    bgVideo2.addEventListener("ended", switchBackground);
+      incomingVideo.removeEventListener("canplay", handleReady);
 
-    bgVideo1.addEventListener("error", () => {
-      if (backgroundVideos.length > 1) switchBackground();
-    });
+      incomingVideo.currentTime = 0;
 
-    bgVideo2.addEventListener("error", () => {
-      if (backgroundVideos.length > 1) switchBackground();
-    });
+      incomingVideo.play().catch(error => {
+        console.warn("Next background video failed:", error);
+      });
 
-    startBackground();
+      incomingVideo.classList.add("active");
+      outgoingVideo.classList.remove("active");
+
+      setTimeout(() => {
+
+        outgoingVideo.pause();
+        outgoingVideo.removeAttribute("src");
+        outgoingVideo.load();
+
+        activeVideo = incomingVideo;
+        nextVideo = outgoingVideo;
+
+        switching = false;
+
+      }, 1900);
+
+    }, { once: true });
+  }
+
+  bgVideo1.addEventListener("ended", switchBackground);
+  bgVideo2.addEventListener("ended", switchBackground);
+
+  startBackground();
 
 
-    /* =====================================
-       SCROLL REVEAL ANIMATION
-    ===================================== */
+  /* =====================================
+     SCROLL REVEAL
+  ===================================== */
 
-    const revealElements = document.querySelectorAll(".reveal");
+  const revealElements = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
 
     const observer = new IntersectionObserver((entries) => {
+
       entries.forEach(entry => {
+
         if (entry.isIntersecting) {
+
           entry.target.classList.add("visible");
+
           observer.unobserve(entry.target);
         }
+
       });
+
     }, {
       threshold: 0.15
     });
@@ -1041,25 +200,43 @@
       observer.observe(element);
     });
 
+  } else {
 
-    /* =====================================
-       SCROLL PROGRESS BAR
-    ===================================== */
-
-    const progressBar = document.getElementById("scrollProgress");
-
-    window.addEventListener("scroll", () => {
-      const scrollTop = window.scrollY;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      const progress = scrollHeight > 0
-        ? (scrollTop / scrollHeight) * 100
-        : 0;
-
-      progressBar.style.width = progress + "%";
+    revealElements.forEach(element => {
+      element.classList.add("visible");
     });
-  </script>
 
-</body>
-</html>
+  }
+
+
+  /* =====================================
+     SCROLL PROGRESS BAR
+  ===================================== */
+
+  const progressBar = document.getElementById("scrollProgress");
+
+  function updateProgress() {
+
+    const scrollTop = window.scrollY;
+
+    const scrollHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+
+    const progress = scrollHeight > 0
+      ? (scrollTop / scrollHeight) * 100
+      : 0;
+
+    progressBar.style.width = progress + "%";
+  }
+
+  window.addEventListener("scroll", updateProgress, {
+    passive: true
+  });
+
+  updateProgress();
+
+});
+</script>
+
+<script src="config.js" defer></script>
+<script src="js/site.js" defer></script>
