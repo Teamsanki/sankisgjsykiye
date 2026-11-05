@@ -6,7 +6,7 @@ window.SANKI_CONFIG={
     aiAgentUrl:"https://YOUR-SANKI-BEATS-DOMAIN.com/agent",
 samples:[
   {title:"Bouncy Groove",genre:"Vlogging Bg Beat",bpm:142,key:"F Minor",preview:"Bouncy Vlog Groove.mp3"},
-  {title:"Gritty Low End",genre:"Melodic Hip-Hop",bpm:96,key:"C Minor",preview:"Gritty Low-End.mp3"},
+  {title:"Gritty Low End",genre:"Melodic Hip-Hop",bpm:96,key:"C Minor",preview:"Gritty Low-End.wav"},
   {title:"Mountain Air",genre:"Chill",bpm:148,key:"D Minor",preview:"Mountain Air.mp3"}
 ]
   }
