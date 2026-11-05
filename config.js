@@ -5,9 +5,9 @@ window.SANKI_CONFIG={
   officialSiteUrl:"https://YOUR-SANKI-BEATS-DOMAIN.com",
   aiAgentUrl:"https://YOUR-SANKI-BEATS-DOMAIN.com/agent",
   samples:[
-   {title:"DARK TRAP 01",genre:"Punjabi Trap",bpm:142,key:"F Minor",preview:"dark-trap-01-30sec.mp3"},
-   {title:"MELODIC VIBE 01",genre:"Melodic Hip-Hop",bpm:96,key:"C Minor",preview:"melodic-vibe-01-30sec.mp3"},
-   {title:"DRILL ENERGY 01",genre:"Drill",bpm:148,key:"D Minor",preview:"drill-energy-01-30sec.mp3"}
+   {title:"Bouncy Groove",genre:"Vlogging Bg Beat",bpm:142,key:"F Minor",preview:"https://github.com/Teamsanki/sankisgjsykiye/blob/main/assets/music/Bouncy%20Vlog%20Groove.mp3"},
+   {title:"Gritty Low End",genre:"Melodic Hip-Hop",bpm:96,key:"C Minor",preview:"https://github.com/Teamsanki/sankisgjsykiye/blob/main/assets/music/Gritty%20Low-End.wav"},
+   {title:"Mountain Air",genre:"Chill",bpm:148,key:"D Minor",preview:"https://github.com/Teamsanki/sankisgjsykiye/blob/main/assets/music/Mountain%20Air.mp3"}
   ]
  }
 };
