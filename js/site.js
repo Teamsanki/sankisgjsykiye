@@ -1,4 +1,3 @@
-
 (() => {
   "use strict";
 
@@ -53,13 +52,8 @@
   const beatsPage = document.querySelector("[data-beats-page]");
 
   if (beatsPage) {
-    const beatsContent = document.querySelector(
-      "[data-beats-content]"
-    );
-
-    const beatsOffline = document.querySelector(
-      "[data-beats-offline]"
-    );
+    const beatsContent = document.querySelector("[data-beats-content]");
+    const beatsOffline = document.querySelector("[data-beats-offline]");
 
     const isOnline = b.online !== false;
 
@@ -144,7 +138,78 @@
 
 
   /* =========================================
-     3. BASIC CONTENT PROTECTION
+     3. MUSIC PAGE: UPCOMING + RELEASES
+  ========================================= */
+
+  const releaseGrid = document.querySelector("[data-release-grid]");
+  const upcomingBox = document.querySelector("[data-upcoming]");
+
+  if (releaseGrid || upcomingBox) {
+    const list = Array.isArray(c.releases) ? c.releases : [];
+    const upcoming = list.filter(r => r.status === "upcoming");
+    const released = list.filter(r => r.status !== "upcoming");
+
+    const okUrl = u => /^https?:\/\//.test(u || "") ? u : "";
+    const slug = s => String(s || "").toLowerCase().trim()
+      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    const posterBase = r => "assets/images/music/" + slug(r.poster || r.title);
+
+    const linkButtons = r => [
+      okUrl(r.youtube)
+        ? `<a class="btn primary" href="${safe(okUrl(r.youtube))}" target="_blank" rel="noopener">▶ YouTube</a>` : "",
+      okUrl(r.spotify)
+        ? `<a class="btn" href="${safe(okUrl(r.spotify))}" target="_blank" rel="noopener">Spotify ↗</a>` : ""
+    ].join("");
+
+    const posterImg = r => `<img class="poster" alt="${safe(r.title)} poster"
+        data-poster="${safe(posterBase(r))}" data-title="${safe(r.title)}">`;
+
+    if (upcomingBox) {
+      upcomingBox.innerHTML = upcoming.map(r => `
+        <div class="upcoming">
+          ${posterImg(r)}
+          <div class="upcoming-info">
+            <div class="eyebrow">Upcoming · Coming Soon</div>
+            <h2>${safe(r.title)}</h2>
+            <p class="sub">${safe(r.desc)}</p>
+            <div class="links">${linkButtons(r)}</div>
+          </div>
+        </div>`).join("");
+    }
+
+    if (releaseGrid) {
+      releaseGrid.innerHTML = released.length
+        ? released.map(r => `
+          <article class="card">
+            ${posterImg(r)}
+            <div class="meta">TERA SANKI · OUT NOW</div>
+            <h3>${safe(r.title)}</h3>
+            <p>${safe(r.desc)}</p>
+            <div class="links">${linkButtons(r)}</div>
+          </article>`).join("")
+        : `<p class="sub">New music coming soon.</p>`;
+    }
+
+    /* Poster loader: .jpg -> .png -> text cover */
+    document.querySelectorAll("img[data-poster]").forEach(img => {
+      img.addEventListener("error", () => {
+        if (!img.dataset.tried) {
+          img.dataset.tried = "1";
+          img.src = img.dataset.poster + ".png";
+        } else {
+          const cover = document.createElement("div");
+          cover.className = "cover";
+          cover.textContent = img.dataset.title;
+          img.replaceWith(cover);
+        }
+      });
+      img.src = img.dataset.poster + ".jpg";
+    });
+  }
+
+
+  /* =========================================
+     4. BASIC CONTENT PROTECTION
   ========================================= */
 
   const protectionEnabled =
@@ -173,7 +238,7 @@
 
 
   /* =========================================
-     4. SAFE TEXT OUTPUT
+     5. SAFE TEXT OUTPUT
   ========================================= */
 
   function safe(value) {
