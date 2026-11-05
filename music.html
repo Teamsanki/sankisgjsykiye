@@ -1,4 +1,55 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MUSIC — Tera Sanki</title><meta name="description" content="Official releases and discography of Tera Sanki. Listen on YouTube and Spotify."><link rel="icon" href="assets/icons/favicon.svg"><link rel="stylesheet" href="css/style.css"><script src="config.js" defer></script><script src="js/site.js" defer></script></head><body><header class="header"><a class="brand" href="index.html"><b>SANKI</b> MUSIC</a><nav><a href="index.html">Home</a><a href="music.html">Music</a><a href="videos.html">Videos</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="beats.html">Sanki Beats ↗</a></nav></header><main><section class="hero"><div class="container"><div class="eyebrow">Sanki Music / Tera Sanki</div><h1 class="display">MUSIC</h1><p class="sub">Official releases and discography.</p></div></section>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MUSIC — Tera Sanki</title><meta name="description" content="Official releases and discography of Tera Sanki. Listen on YouTube and Spotify."><link rel="icon" href="assets/icons/favicon.svg"><link rel="stylesheet" href="css/style.css">
+
+<style>
+/* ===== MUSIC PAGE ONLY ===== */
+
+/* Release cards */
+body.music-page .card{padding:24px;overflow:hidden}
+body.music-page .card img.poster{
+  display:block;
+  width:calc(100% + 48px);
+  max-width:none;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  margin:-24px -24px 22px;
+  background:#111;
+}
+body.music-page .card p{font-size:13px;line-height:1.7}
+body.music-page .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+body.music-page .links .btn{margin:0;padding:12px 16px}
+
+/* Upcoming song */
+body.music-page .upcoming{
+  display:grid;
+  grid-template-columns:minmax(0,340px) 1fr;
+  gap:36px;
+  align-items:center;
+  margin-bottom:60px;
+}
+body.music-page .upcoming img.poster{
+  display:block;
+  width:100%;
+  max-width:340px;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border:1px solid var(--line);
+  box-shadow:0 10px 40px rgba(0,0,0,.6);
+  background:#111;
+}
+body.music-page .upcoming-info h2{font:900 clamp(40px,6vw,72px)/.9 'Barlow Condensed';margin:10px 0 18px}
+body.music-page .upcoming-info .sub{margin:0}
+
+/* Poster na mile to text-cover */
+body.music-page .upcoming .cover{margin:0;width:100%;max-width:340px;aspect-ratio:1/1;height:auto}
+
+@media(max-width:760px){
+  body.music-page .upcoming{grid-template-columns:1fr;gap:22px}
+  body.music-page .upcoming img.poster,
+  body.music-page .upcoming .cover{max-width:100%}
+}
+</style>
+
+<script src="config.js" defer></script><script src="js/site.js" defer></script></head><body class="music-page"><header class="header"><a class="brand" href="index.html"><b>SANKI</b> MUSIC</a><nav><a href="index.html">Home</a><a href="music.html">Music</a><a href="videos.html">Videos</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="beats.html">Sanki Beats ↗</a></nav></header><main><section class="hero"><div class="container"><div class="eyebrow">Sanki Music / Tera Sanki</div><h1 class="display">MUSIC</h1><p class="sub">Official releases and discography.</p></div></section>
 
 <section class="section" style="padding-top:0"><div class="container"><div data-upcoming></div></div></section>
 
