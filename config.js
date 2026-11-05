@@ -9,3 +9,5 @@ samples:[
   {title:"Gritty Low End",genre:"Melodic Hip-Hop",bpm:96,key:"C Minor",preview:"assets/music/Gritty%20Low-End.wav"},
   {title:"Mountain Air",genre:"Chill",bpm:148,key:"D Minor",preview:"assets/music/Mountain%20Air.mp3"}
 ]
+  }
+};
