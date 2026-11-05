@@ -1,0 +1,66 @@
+/* ===== SANKI MUSIC: MOBILE FIX (all pages) ===== */
+
+html{-webkit-text-size-adjust:100%}
+body{overflow-x:hidden}
+img,video,iframe,canvas,svg{max-width:100%;height:auto}
+audio{max-width:100%}
+
+/* Tablet */
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .container{width:90vw}
+}
+
+/* Phone */
+@media(max-width:760px){
+
+  /* Header: brand upar, menu neeche */
+  .header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+    padding:14px 5vw;
+  }
+  .brand{font-size:22px}
+  nav{
+    width:100%;
+    gap:6px 14px;
+    flex-wrap:wrap;
+    justify-content:flex-start;
+  }
+  nav a{font-size:9px;letter-spacing:.12em;padding:4px 0}
+
+  /* Hero (header ab lamba hai, isliye zyada top padding) */
+  .hero{min-height:auto;padding:170px 0 56px}
+  .display{font-size:clamp(52px,19vw,96px);margin:18px 0}
+  .sub{font-size:14px;line-height:1.7;max-width:100%}
+
+  /* Sections */
+  .section{padding:48px 0}
+  .section h2{font-size:clamp(36px,11vw,54px);margin:12px 0 24px}
+
+  /* Cards */
+  .grid{grid-template-columns:1fr;gap:16px}
+  .card{padding:18px}
+  .card:hover{transform:none}
+  .cover{height:170px;font-size:34px;margin:-18px -18px 18px}
+  .card h3{font-size:28px}
+
+  /* Buttons: tap karne layak */
+  .btn{display:block;width:100%;text-align:center;margin:12px 0 0;padding:15px 16px}
+
+  /* Notice, footer */
+  .notice{padding:18px;font-size:13px}
+  .footer{flex-direction:column;gap:10px;padding:22px 5vw;text-align:left}
+
+  /* Coming soon page */
+  .coming h1{font-size:clamp(52px,17vw,100px)}
+}
+
+/* Bahut chhote phone */
+@media(max-width:380px){
+  .container{width:92vw}
+  nav a{font-size:8px}
+  .card{padding:16px}
+  .cover{margin:-16px -16px 16px}
+}
