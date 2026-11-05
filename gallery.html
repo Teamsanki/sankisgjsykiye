@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -17,8 +16,178 @@
   <script src="js/site.js" defer></script>
 
   <style>
+    /* =====================================
+       CINEMATIC LOOP SLIDESHOW
+    ===================================== */
+
+    .cine-section {
+      padding: 40px 0 0;
+    }
+
+    .cine-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 21 / 9;
+      min-height: 280px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid #252525;
+      cursor: pointer;
+      isolation: isolate;
+    }
+
+    .cine-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.6s ease-in-out;
+      z-index: 1;
+    }
+
+    .cine-slide.active {
+      opacity: 1;
+      z-index: 3;
+    }
+
+    .cine-slide.leaving {
+      opacity: 0;
+      z-index: 2;
+    }
+
+    .cine-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      display: block;
+      transform: scale(1);
+      will-change: transform;
+    }
+
+    /* Ken Burns (slow cinematic zoom + drift) */
+    .cine-slide.active img,
+    .cine-slide.leaving img {
+      animation: kenburns 8s ease-out forwards;
+    }
+
+    @keyframes kenburns {
+      from { transform: scale(1) translate(0, 0); }
+      to   { transform: scale(1.16) translate(var(--kx, -2%), var(--ky, -1.5%)); }
+    }
+
+    /* Vignette + film grain feel */
+    .cine-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.65) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,.55), transparent 22%, transparent 70%, rgba(0,0,0,.85));
+    }
+
+    /* Letterbox bars */
+    .cine-stage::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+      border-top: 14px solid #000;
+      border-bottom: 14px solid #000;
+    }
+
+    .cine-caption {
+      position: absolute;
+      left: 40px;
+      bottom: 48px;
+      z-index: 7;
+      color: #fff;
+      pointer-events: none;
+    }
+
+    .cine-caption .cine-count {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 4px;
+      opacity: .6;
+      margin-bottom: 8px;
+    }
+
+    .cine-caption .cine-title {
+      display: block;
+      font-size: clamp(22px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(24px);
+      filter: blur(6px);
+      transition: opacity 1s ease .5s, transform 1s ease .5s, filter 1s ease .5s;
+    }
+
+    .cine-caption.show .cine-title {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    .cine-progress {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 14px;
+      height: 3px;
+      z-index: 7;
+      background: rgba(255,255,255,.12);
+      pointer-events: none;
+    }
+
+    .cine-progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: #fff;
+    }
+
+    .cine-progress span.run {
+      animation: progress var(--dur, 5500ms) linear forwards;
+    }
+
+    @keyframes progress {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+
+    .cine-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .cine-dots button {
+      width: 28px;
+      height: 3px;
+      border: 0;
+      padding: 0;
+      background: #333;
+      cursor: pointer;
+      transition: background .4s ease, width .4s ease;
+    }
+
+    .cine-dots button.active {
+      background: #fff;
+      width: 46px;
+    }
+
+    /* =====================================
+       GRID (staggered fade reveal)
+    ===================================== */
+
     .gallery-section {
-      padding: 70px 0 110px;
+      padding: 60px 0 110px;
     }
 
     .gallery-grid {
@@ -34,6 +203,25 @@
       border: 1px solid #252525;
       cursor: pointer;
       aspect-ratio: 4 / 5;
+
+      opacity: 0;
+      transform: translateY(40px) scale(.96);
+      filter: blur(8px);
+      transition:
+        opacity 1.1s ease,
+        transform 1.1s cubic-bezier(.2,.7,.2,1),
+        filter 1.1s ease,
+        border-color .4s ease;
+    }
+
+    .gallery-item.in {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+
+    .gallery-item:hover {
+      border-color: #666;
     }
 
     .gallery-item img {
@@ -41,11 +229,11 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform .5s ease, opacity .4s ease;
+      transition: transform .8s ease, opacity .4s ease;
     }
 
     .gallery-item:hover img {
-      transform: scale(1.06);
+      transform: scale(1.08);
       opacity: .85;
     }
 
@@ -61,49 +249,77 @@
       letter-spacing: 1px;
     }
 
+    /* =====================================
+       LIGHTBOX (fade + prev/next)
+    ===================================== */
+
     .gallery-lightbox {
-      display: none;
       position: fixed;
       inset: 0;
       z-index: 9999;
       background: rgba(0,0,0,.96);
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 30px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .5s ease, visibility .5s;
     }
 
     .gallery-lightbox.active {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
     }
 
     .gallery-lightbox img {
       max-width: 95%;
       max-height: 85vh;
       object-fit: contain;
+      opacity: 0;
+      transform: scale(.96);
+      transition: opacity .6s ease, transform .6s ease;
     }
 
-    .gallery-close {
+    .gallery-lightbox img.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .gallery-close,
+    .gallery-nav {
       position: absolute;
-      top: 20px;
-      right: 30px;
       color: white;
-      font-size: 35px;
       cursor: pointer;
       background: none;
       border: 0;
+      line-height: 1;
+      transition: opacity .3s ease;
+      opacity: .7;
     }
 
-    @media(max-width:750px) {
+    .gallery-close:hover,
+    .gallery-nav:hover { opacity: 1; }
+
+    .gallery-close { top: 20px; right: 30px; font-size: 38px; }
+    .gallery-nav   { top: 50%; font-size: 52px; transform: translateY(-50%); padding: 10px 18px; }
+    .gallery-prev  { left: 10px; }
+    .gallery-next  { right: 10px; }
+
+    @media (max-width: 750px) {
       .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
       }
+      .cine-stage { aspect-ratio: 4 / 3; }
+      .cine-caption { left: 20px; bottom: 40px; }
+      .gallery-nav { font-size: 38px; padding: 6px 10px; }
     }
 
-    @media(max-width:450px) {
-      .gallery-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      .cine-slide.active img,
+      .cine-slide.leaving img { animation: none; }
+      .gallery-item { transition: opacity .3s ease; transform: none; filter: none; }
     }
   </style>
 </head>
@@ -132,6 +348,20 @@
       <p class="sub">
         Artist portraits and behind-the-scenes moments.
       </p>
+    </div>
+  </section>
+
+  <!-- CINEMATIC LOOP SHOW (auto-built from the images below) -->
+  <section class="cine-section">
+    <div class="container">
+      <div class="cine-stage" id="cineStage" aria-label="Cinematic gallery slideshow">
+        <div class="cine-caption" id="cineCaption">
+          <span class="cine-count" id="cineCount">01 / 06</span>
+          <span class="cine-title" id="cineTitle"></span>
+        </div>
+        <div class="cine-progress"><span id="cineBar"></span></div>
+      </div>
+      <div class="cine-dots" id="cineDots"></div>
     </div>
   </section>
 
@@ -198,48 +428,262 @@
 <!-- FULLSCREEN IMAGE PREVIEW -->
 
 <div class="gallery-lightbox" id="galleryLightbox">
-  <button class="gallery-close" id="galleryClose"
-          aria-label="Close image preview">&times;</button>
+  <button class="gallery-close" id="galleryClose" aria-label="Close image preview">&times;</button>
+  <button class="gallery-nav gallery-prev" id="galleryPrev" aria-label="Previous image">&#8249;</button>
+  <button class="gallery-nav gallery-next" id="galleryNext" aria-label="Next image">&#8250;</button>
   <img id="lightboxImage" src="" alt="Gallery preview">
 </div>
 
 <script>
-  const galleryItems = document.querySelectorAll(".gallery-item");
-  const lightbox = document.getElementById("galleryLightbox");
-  const lightboxImage = document.getElementById("lightboxImage");
-  const closeButton = document.getElementById("galleryClose");
+(function () {
 
-  galleryItems.forEach(item => {
+  /* =====================================
+     DATA (read from the grid, one source)
+  ===================================== */
+
+  const gridItems = Array.from(document.querySelectorAll(".gallery-item"));
+
+  const photos = gridItems.map(function (item) {
     const img = item.querySelector("img");
-
-    img.addEventListener("error", () => {
-      console.error("Gallery image not found:", img.src);
-    });
-
-    item.addEventListener("click", () => {
-      if (!img.complete || img.naturalWidth === 0) return;
-
-      lightboxImage.src = img.src;
-      lightbox.classList.add("active");
-    });
+    return {
+      src: img.getAttribute("src"),
+      alt: img.getAttribute("alt") || "",
+      caption: item.querySelector(".gallery-caption").textContent.trim(),
+      broken: false
+    };
   });
 
-  function closeLightbox() {
-    lightbox.classList.remove("active");
-    lightboxImage.src = "";
+  const pad = function (n) { return String(n).padStart(2, "0"); };
+
+
+  /* =====================================
+     CINEMATIC SLIDESHOW (LOOP)
+  ===================================== */
+
+  const SLIDE_TIME = 5500;      // ms per image
+  const FADE_TIME  = 1700;      // must be > CSS fade (1.6s)
+
+  const stage    = document.getElementById("cineStage");
+  const caption  = document.getElementById("cineCaption");
+  const countEl  = document.getElementById("cineCount");
+  const titleEl  = document.getElementById("cineTitle");
+  const bar      = document.getElementById("cineBar");
+  const dotsWrap = document.getElementById("cineDots");
+
+  stage.style.setProperty("--dur", SLIDE_TIME + "ms");
+
+  // Ken Burns directions (alternating drift)
+  const drifts = [
+    ["-2%", "-1.5%"], ["2%", "-1%"], ["-1.5%", "1.5%"],
+    ["1.5%", "1%"],   ["0%", "-2%"], ["-2%", "0%"]
+  ];
+
+  const slides = [];
+  const dots = [];
+
+  photos.forEach(function (p, i) {
+    const slide = document.createElement("div");
+    slide.className = "cine-slide";
+    slide.style.setProperty("--kx", drifts[i % drifts.length][0]);
+    slide.style.setProperty("--ky", drifts[i % drifts.length][1]);
+
+    const img = document.createElement("img");
+    img.src = p.src;
+    img.alt = p.alt;
+    img.addEventListener("error", function () {
+      p.broken = true;
+      console.error("Gallery image not found:", p.src);
+      if (i === current) next();
+    });
+
+    slide.appendChild(img);
+    stage.insertBefore(slide, caption);
+    slides.push(slide);
+
+    const dot = document.createElement("button");
+    dot.setAttribute("aria-label", "Show image " + (i + 1));
+    dot.addEventListener("click", function () { go(i, true); });
+    dotsWrap.appendChild(dot);
+    dots.push(dot);
+  });
+
+  let current = -1;
+  let timer = null;
+  let paused = false;
+
+  function show(index) {
+
+    const prev = current;
+    current = index;
+
+    if (prev >= 0 && prev !== index) {
+      const old = slides[prev];
+      old.classList.remove("active");
+      old.classList.add("leaving");
+      setTimeout(function () { old.classList.remove("leaving"); }, FADE_TIME);
+      dots[prev].classList.remove("active");
+    }
+
+    slides[index].classList.remove("leaving");
+    slides[index].classList.add("active");
+    dots[index].classList.add("active");
+
+    // caption animation
+    caption.classList.remove("show");
+    countEl.textContent = pad(index + 1) + " / " + pad(photos.length);
+    titleEl.textContent = photos[index].caption;
+    void caption.offsetWidth;
+    caption.classList.add("show");
+
+    // progress bar restart
+    bar.classList.remove("run");
+    void bar.offsetWidth;
+    bar.classList.add("run");
   }
 
-  closeButton.addEventListener("click", closeLightbox);
+  function nextIndex(from) {
+    for (let step = 1; step <= photos.length; step++) {
+      const idx = (from + step) % photos.length;
+      if (!photos[idx].broken) return idx;
+    }
+    return from;
+  }
 
-  lightbox.addEventListener("click", event => {
-    if (event.target === lightbox) {
-      closeLightbox();
+  function schedule() {
+    clearTimeout(timer);
+    if (paused) return;
+    timer = setTimeout(next, SLIDE_TIME);
+  }
+
+  function next() {
+    show(nextIndex(current));
+    schedule();
+  }
+
+  function go(index, userClicked) {
+    if (index === current) return;
+    show(index);
+    schedule();
+  }
+
+  // Pause when tab is hidden (saves battery, keeps timing clean)
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      paused = true;
+      clearTimeout(timer);
+      bar.classList.remove("run");
+    } else {
+      paused = false;
+      show(current);
+      schedule();
     }
   });
 
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeLightbox();
+  // Click on stage opens lightbox on current image
+  stage.addEventListener("click", function () { openLightbox(current); });
+
+  if (photos.length) {
+    show(0);
+    schedule();
+  }
+
+
+  /* =====================================
+     GRID REVEAL (staggered fade-in)
+  ===================================== */
+
+  gridItems.forEach(function (item, i) {
+    item.style.transitionDelay = ((i % 3) * 140) + "ms";
+
+    const img = item.querySelector("img");
+    img.addEventListener("error", function () {
+      console.error("Gallery image not found:", img.src);
+    });
+
+    item.addEventListener("click", function () {
+      if (!img.complete || img.naturalWidth === 0) return;
+      openLightbox(i);
+    });
   });
+
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    gridItems.forEach(function (item) { io.observe(item); });
+  } else {
+    gridItems.forEach(function (item) { item.classList.add("in"); });
+  }
+
+
+  /* =====================================
+     LIGHTBOX
+  ===================================== */
+
+  const lightbox = document.getElementById("galleryLightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const closeButton = document.getElementById("galleryClose");
+  const prevButton = document.getElementById("galleryPrev");
+  const nextButton = document.getElementById("galleryNext");
+
+  let lbIndex = 0;
+
+  function setLightboxImage(index) {
+    lbIndex = (index + photos.length) % photos.length;
+    lightboxImage.classList.remove("show");
+
+    setTimeout(function () {
+      lightboxImage.src = photos[lbIndex].src;
+      lightboxImage.alt = photos[lbIndex].alt;
+    }, 200);
+  }
+
+  lightboxImage.addEventListener("load", function () {
+    if (lightboxImage.getAttribute("src")) lightboxImage.classList.add("show");
+  });
+
+  function openLightbox(index) {
+    lbIndex = index;
+    lightboxImage.src = photos[index].src;
+    lightbox.classList.add("active");
+
+    // pause slideshow while viewing
+    paused = true;
+    clearTimeout(timer);
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+    lightboxImage.classList.remove("show");
+
+    setTimeout(function () { lightboxImage.src = ""; }, 500);
+
+    paused = false;
+    schedule();
+  }
+
+  closeButton.addEventListener("click", closeLightbox);
+  prevButton.addEventListener("click", function (e) { e.stopPropagation(); setLightboxImage(lbIndex - 1); });
+  nextButton.addEventListener("click", function (e) { e.stopPropagation(); setLightboxImage(lbIndex + 1); });
+
+  lightbox.addEventListener("click", function (event) {
+    if (event.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (!lightbox.classList.contains("active")) return;
+    if (event.key === "Escape") closeLightbox();
+    if (event.key === "ArrowLeft") setLightboxImage(lbIndex - 1);
+    if (event.key === "ArrowRight") setLightboxImage(lbIndex + 1);
+  });
+
+})();
 </script>
 
 <footer class="footer">
